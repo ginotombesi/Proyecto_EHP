@@ -9,19 +9,8 @@ const ActivityCard = ({ activity }) => {
   const [showDescription, setShowDescription] = useState(false);
   const navigate = useNavigate();
   const handleReserve = () => {
-    Swal.fire({
-      title: '¿Confirmar reserva?',
-      text: `¿Deseás reservar para: ${activity.name}?`,
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, reservar',
-      cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
         navigate('/reserve', { state: { activity } });
-      }
-    });
-  };
+  }
 
   const toggleDescription = () => {
     setShowDescription((prev) => !prev);

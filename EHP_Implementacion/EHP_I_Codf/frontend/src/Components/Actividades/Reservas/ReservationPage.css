@@ -139,6 +139,22 @@
   background-color: #f0f0f0;
   color: #222;
 }
+.confirm-button {
+  float: right;
+  margin-top: 20px;
+  background-color: #c0392b;
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirm-button:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
 
 /* RESPONSIVE DESIGN */
 @media (max-width: 600px) {
