@@ -1,0 +1,131 @@
+/* src/components/ActivityCard.css */
+
+.activity-card {
+  width: 100%;
+  max-width: 100%;
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 1rem auto;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
+.activity-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.activity-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.activity-info-row h3,
+.activity-info-row p {
+  margin: 0;
+  ;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+}
+
+.activity-card:hover {
+  color: #e14e52;
+  transform: translateY(-5px);
+}
+
+.activity-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.activity-card p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+  word-wrap: break-word;
+}
+
+.activity-description {
+  font-size: 1rem;
+  color: #555;
+  margin: 1rem 0;
+}
+
+.reserve-button {
+  width: auto;
+  white-space: nowrap;
+  padding: 0.6rem 1rem;
+}
+
+
+.reserve-button:hover {
+  background-color: #e14e52;
+}
+
+.toggle-description {
+  margin: 0;
+  padding: 0 0.5rem;
+  font-size: 1.2rem;
+  align-self: center;
+}
+
+.toggle-description:hover {
+  color: #e14e52;
+}
+
+/* Contenedor general para centrar si se desea */
+.activity-container {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .activity-card h3 {
+    font-size: 1.4rem;
+  }
+
+/* Mantenemos distribución horizontal */
+  .activity-info-row {
+    flex-direction: row; /* Fuerza mantener horizontal en mobile */
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .activity-card p {
+    font-size: 1rem;
+  }
+
+  .reserve-button {
+    width: auto;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .activity-card {
+    padding: 1rem;
+  }
+
+  .activity-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .activity-card p {
+    font-size: 0.95rem;
+  }
+
+  .reserve-button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+    width: auto;
+  }
+}
