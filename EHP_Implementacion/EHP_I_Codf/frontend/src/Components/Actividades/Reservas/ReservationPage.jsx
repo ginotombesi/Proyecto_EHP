@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './ReservationPage.css';
 import { useLocation, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'; 
 
-// Simulamos los talles como en PersonForm
 const shoeSizes = Array.from({ length: 23 }, (_, i) => (22 + i).toString());
 const shirtSizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
 const pantsSizes = Array.from({ length: 13 }, (_, i) => (38 + i).toString());
@@ -11,7 +11,6 @@ const ReservationPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const activity = location.state?.activity;
-  const [showConfirmation, setShowConfirmation] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     dni: '',
@@ -35,15 +34,7 @@ const ReservationPage = () => {
       [e.target.name]: e.target.value
     });
   };
-  const handleConfirmReservation = () => {
-    // En un sistema real guardarías los datos acá
-    setShowConfirmation(true);
-  };
-  
-  const handleCloseConfirmation = () => {
-    setShowConfirmation(false);
-    navigate('/activities');
-  };
+
   const validateForm = () => {
     const newErrors = {};
     Object.entries(formData).forEach(([key, value]) => {
@@ -80,13 +71,35 @@ const ReservationPage = () => {
     navigate('/activities');
   };
 
+  const handleConfirmReservation = () => {
+    Swal.fire({
+      title: '¿Confirmar reserva?',
+      text: `Estás por reservar ${persons.length} lugar(es) para "${activity.name}".`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#aaa',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: '¡Reserva confirmada!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => navigate('/activities'));
+      }
+    });
+  };
+
   return (
     <div className="reservation-page">
       <h2>Reservar para: {activity.name}</h2>
       <p>Cupos disponibles: {activity.availableSpots - persons.length}</p>
 
       <div className="person-form-wrapper">
-      <label>Nombre Completo</label>
+        <label>Nombre Completo</label>
         <input
           type="text"
           name="fullName"
@@ -95,9 +108,9 @@ const ReservationPage = () => {
           onChange={handleChange}
         />
         {errors.fullName && <span className="error">{errors.fullName}</span>}
+
         <label>DNI</label>
         <input
-        
           type="text"
           name="dni"
           placeholder="DNI"
@@ -105,6 +118,7 @@ const ReservationPage = () => {
           onChange={handleChange}
         />
         {errors.dni && <span className="error">{errors.dni}</span>}
+
         <label>Edad</label>
         <input
           type="number"
@@ -158,7 +172,11 @@ const ReservationPage = () => {
           </div>
         ))}
       </div>
-
+        <button className="confirm-button" 
+        onClick={handleConfirmReservation} 
+        disabled={persons.length === 0}>
+          📝 Reservar
+        </button>
       <button onClick={onBack}>← Volver</button>
     </div>
   );
