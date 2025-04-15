@@ -1,0 +1,19 @@
+.person-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .person-form input,
+  .person-form select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  
+  .person-form label {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
