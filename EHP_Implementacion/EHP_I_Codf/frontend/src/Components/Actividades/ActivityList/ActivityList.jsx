@@ -1,7 +1,8 @@
 // src/components/ActivityList.jsx
 import React from 'react';
+import './ActivityList.css';
 import ActivityCard from '../ActivityCard/ActivityCard.jsx';
-
+import Clock from '../ActivityCard/Clock.jsx';
 const ActivityList = () => {
 
   const activities = [
@@ -40,7 +41,9 @@ const ActivityList = () => {
   ];
 
   return (
-    <div className="activity-list">
+    <div className="activity-list-container">
+      <Clock />
+      <h2 className="activity-title">Actividades Activas</h2>
       {activities.map((activity, index) => (
         <ActivityCard key={index} activity={activity} />
       ))}
