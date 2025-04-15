@@ -1,0 +1,25 @@
+/* src/components/Clock.css */
+.digital-clock {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: #1e1e2f;
+    color: #00ffcc;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 24px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    letter-spacing: 2px;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes glow {
+    from {
+      text-shadow: 0 0 10px #00ffcc;
+    }
+    to {
+      text-shadow: 0 0 20px #00ffcc, 0 0 30px #00ffcc;
+    }
+  }
+  

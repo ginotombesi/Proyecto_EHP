@@ -19,6 +19,8 @@ const ActivityCard = ({ activity }) => {
   
 
   return (
+    
+    <>
     <div className="activity-card">
       <div className="activity-info-row">
         <h3>{activity.name}</h3>
@@ -36,6 +38,7 @@ const ActivityCard = ({ activity }) => {
         <p className="activity-description">{activity.description}</p>
       )}
     </div>
+    </>
   );
 };
 

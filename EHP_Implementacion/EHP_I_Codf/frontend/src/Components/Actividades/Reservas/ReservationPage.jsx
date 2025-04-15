@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ReservationPage.css';
 import { useLocation, useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2'; 
+import Swal from 'sweetalert2';
 
 const shoeSizes = Array.from({ length: 23 }, (_, i) => (22 + i).toString());
 const shirtSizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
@@ -45,9 +45,17 @@ const ReservationPage = () => {
   };
 
   const addPerson = () => {
-    if (!validateForm()) return;
+    if (persons.length >= activity.availableSpots) {
+      Swal.fire({
+        icon: 'info',
+        title: '¡Sin cupos!',
+        text: 'No hay más cupos disponibles para esta actividad.',
+        confirmButtonColor: '#d33',
+      });
+      return;
+    }
 
-    if (persons.length >= activity.availableSpots) return;
+    if (!validateForm()) return;
 
     setPersons([...persons, formData]);
     setFormData({
@@ -93,10 +101,14 @@ const ReservationPage = () => {
     });
   };
 
+  const isFull = persons.length >= activity.availableSpots;
+
   return (
     <div className="reservation-page">
       <h2>Reservar para: {activity.name}</h2>
       <p>Cupos disponibles: {activity.availableSpots - persons.length}</p>
+
+      
 
       <div className="person-form-wrapper">
         <label>Nombre Completo</label>
@@ -106,7 +118,9 @@ const ReservationPage = () => {
           placeholder="Nombre completo"
           value={formData.fullName}
           onChange={handleChange}
+          disabled={isFull}
         />
+        {isFull && <span className="error">Se alcanzó el límite de cupos</span>}
         {errors.fullName && <span className="error">{errors.fullName}</span>}
 
         <label>DNI</label>
@@ -116,7 +130,9 @@ const ReservationPage = () => {
           placeholder="DNI"
           value={formData.dni}
           onChange={handleChange}
+          disabled={isFull}
         />
+        {isFull && <span className="error">Se alcanzó el límite de cupos</span>}
         {errors.dni && <span className="error">{errors.dni}</span>}
 
         <label>Edad</label>
@@ -126,39 +142,57 @@ const ReservationPage = () => {
           placeholder="Edad"
           value={formData.age}
           onChange={handleChange}
+          disabled={isFull}
         />
+        {isFull && <span className="error">Se alcanzó el límite de cupos</span>}
         {errors.age && <span className="error">{errors.age}</span>}
 
         <label>Talla de Zapatos</label>
-        <select name="shoeSize" value={formData.shoeSize} onChange={handleChange}>
+        <select
+          name="shoeSize"
+          value={formData.shoeSize}
+          onChange={handleChange}
+          disabled={isFull}
+        >
           <option value="">Seleccionar</option>
           {shoeSizes.map(size => (
             <option key={size} value={size}>{size}</option>
           ))}
         </select>
+        
         {errors.shoeSize && <span className="error">{errors.shoeSize}</span>}
 
         <label>Talla de Remera/Campera</label>
-        <select name="shirtSize" value={formData.shirtSize} onChange={handleChange}>
+        <select
+          name="shirtSize"
+          value={formData.shirtSize}
+          onChange={handleChange}
+          disabled={isFull}
+        >
           <option value="">Seleccionar</option>
           {shirtSizes.map(size => (
             <option key={size} value={size}>{size}</option>
           ))}
         </select>
+        {isFull && <span className="error">Se alcanzó el límite de cupos</span>}
         {errors.shirtSize && <span className="error">{errors.shirtSize}</span>}
 
         <label>Talla de Pantalón</label>
-        <select name="pantsSize" value={formData.pantsSize} onChange={handleChange}>
+        <select
+          name="pantsSize"
+          value={formData.pantsSize}
+          onChange={handleChange}
+          disabled={isFull}
+        >
           <option value="">Seleccionar</option>
           {pantsSizes.map(size => (
             <option key={size} value={size}>{size}</option>
           ))}
         </select>
+        {isFull && <span className="error">Se alcanzó el límite de cupos</span>}
         {errors.pantsSize && <span className="error">{errors.pantsSize}</span>}
 
-        {persons.length < activity.availableSpots && (
-          <button onClick={addPerson}>+ Agregar Persona</button>
-        )}
+        {!isFull && <button onClick={addPerson}>+ Agregar Persona</button>}
       </div>
 
       <div className="person-cards-container">
@@ -172,11 +206,15 @@ const ReservationPage = () => {
           </div>
         ))}
       </div>
-        <button className="confirm-button" 
-        onClick={handleConfirmReservation} 
-        disabled={persons.length === 0}>
-          📝 Reservar
-        </button>
+
+      <button
+        className="confirm-button"
+        onClick={handleConfirmReservation}
+        disabled={persons.length === 0}
+      >
+        📝 Reservar
+      </button>
+
       <button onClick={onBack}>← Volver</button>
     </div>
   );

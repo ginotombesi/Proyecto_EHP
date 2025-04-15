@@ -1,9 +1,45 @@
-/* src/components/ActivityList.css */
+.activity-list-container {
+  position: relative;
+  padding-top: 60px;
+  padding-right: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding-bottom: 80px;
+}
 
-.activity-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 2rem;
-  }
-  
+.activity-title {
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 24px;
+  color: #222222;
+  font-family: 'Helvetica Neue', 'Segoe UI', sans-serif;
+  position: relative;
+}
+
+.activity-title::after {
+  content: '';
+  display: block;
+  margin: 16px auto 0;
+  width: 120px; /* Línea más larga */
+  height: 4px;
+  border-radius: 4px;
+  background-color: #FF385C;
+}
+
+/* Opcional: mejora visual para los cards */
+.activity-card {
+  width: 90%;
+  max-width: 1000px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  transition: transform 0.2s ease;
+}
+
+.activity-card:hover {
+  transform: translateY(-4px);
+}
