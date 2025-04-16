@@ -1,6 +1,6 @@
 // routes/tipoActividadRoutes.js
 const express = require('express');
-const tipoActividadService = require('../services/tipoActividadService.js')
+const tipoActividadService = require('../services/tipoActividad.service.js')
 
 const router = express.Router();
 
@@ -63,4 +63,4 @@ router.delete('/activities/:idTipo', async (req, res) => {
     }
 });
 
-export default router;
+module.exports = router;

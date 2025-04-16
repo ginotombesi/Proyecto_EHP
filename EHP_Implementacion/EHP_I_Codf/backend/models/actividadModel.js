@@ -8,15 +8,16 @@ const Actividad = sequelize.define('ACTIVIDAD', {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-  },
+    },
     tipoActividadId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: TipoActividad,
-            key: 'idTipo',},
+            key: 'idTipo',
         },
-   horarios: {
+    },
+    horarios: {
         type: DataTypes.TEXT,
         allowNull: false,
     },
@@ -33,9 +34,11 @@ const Actividad = sequelize.define('ACTIVIDAD', {
     },
     activa: {
         type: DataTypes.INTEGER,
-    },
+    }
+}, {
     tableName: 'ACTIVIDAD',
     timestamps: false,
-   },);
+    freezeTableName: true,
+});
 
 module.exports = Actividad;

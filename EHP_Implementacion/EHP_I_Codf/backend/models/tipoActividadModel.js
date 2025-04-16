@@ -1,10 +1,10 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../persistence/db.js");
 
-const TipoActividad = sequelize.define("TipoActividad", {
+const TipoActividad = sequelize.define("TIPOACTIVIDAD", {
 
     idTipo: {
-        type: DataTypes.Integer,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         field: "idTipo",
@@ -15,12 +15,13 @@ const TipoActividad = sequelize.define("TipoActividad", {
         field: "descripcion",
     },
     requiereVest: {
-        type: DataTypes.Integer,
+        type: DataTypes.INTEGER,
         field: "requiereVest"
     }
 },{
       timestamps: false,
-      tableName: "TipoActividad",
+      tableName: "TIPOACTIVIDAD",
+      freezeTableName: true,
 });
 
 module.exports = TipoActividad;
