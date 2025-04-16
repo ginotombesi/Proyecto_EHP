@@ -12,7 +12,7 @@ const ActivityList = () => {
       endTime: '11:00 AM',
       date: '2025-04-20',
       availableSpots: 5,
-      description: 'Deslízate en una tirolesa entre árboles.'
+      description: 'Sentí la adrenalina mientras te deslizás a gran velocidad por una tirolesa suspendida entre los árboles. Una experiencia emocionante, segura y perfecta para los amantes de la aventura al aire libre.'
     },
     {
       name: 'Safari',
@@ -20,7 +20,7 @@ const ActivityList = () => {
       endTime: '12:30 PM',
       date: '2025-04-20',
       availableSpots: 8,
-      description: 'Paseo en vehículo todo terreno observando animales.'
+      description: 'Subite a un vehículo todo terreno y descubrí la fauna silvestre en su hábitat natural. Ideal para toda la familia, este safari guiado combina aventura, educación y contacto con la naturaleza.'
     },
     {
       name: 'Palestra',
@@ -28,15 +28,15 @@ const ActivityList = () => {
       endTime: '2:00 PM',
       date: '2025-04-20',
       availableSpots: 6,
-      description: 'Escalada en muro con supervisión profesional.'
+      description: 'Poné a prueba tu fuerza y destreza escalando nuestro muro de palestra con distintos niveles de dificultad. Supervisión constante de instructores calificados para garantizar seguridad y diversión.'
     },
     {
-      name: 'Jardinera',
+      name: 'Jardineria',
       time: '3:00 PM',
       endTime: '4:00 PM',
       date: '2025-04-20',
       availableSpots: 10,
-      description: 'Paseo en carro tipo jardinera para toda la familia.'
+      description: 'Disfrutá de un paseo relajante en un carro tipo jardinera por senderos llenos de color y aromas naturales. Una actividad tranquila pensada para grandes y chicos, con vistas espectaculares.'
     },
   ];
 
