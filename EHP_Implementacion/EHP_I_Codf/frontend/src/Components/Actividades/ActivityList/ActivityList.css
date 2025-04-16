@@ -1,12 +1,19 @@
 .activity-list-container {
   position: relative;
-  padding-top: 60px;
-  padding-right: 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
+  padding-top: 60px;
   padding-bottom: 80px;
+
+  width: 100vw;  /* Full width del viewport */
+  min-height: 100vh;
+
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+              url('../../../assets/ECH_icons.png') center/cover no-repeat;
+  background-attachment: fixed;
+  overflow-x: hidden; /* previene scroll lateral si algo se desborda */
 }
 
 .activity-title {
@@ -14,16 +21,17 @@
   font-weight: 600;
   text-align: center;
   margin-bottom: 24px;
-  color: #222222;
+  color: #ffffff;
   font-family: 'Helvetica Neue', 'Segoe UI', sans-serif;
   position: relative;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 .activity-title::after {
   content: '';
   display: block;
   margin: 16px auto 0;
-  width: 120px; /* Línea más larga */
+  width: 120px;
   height: 4px;
   border-radius: 4px;
   background-color: #FF385C;

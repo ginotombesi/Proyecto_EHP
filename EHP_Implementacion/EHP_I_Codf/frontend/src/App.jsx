@@ -7,12 +7,12 @@ import ReservationPage from "./Components/Actividades/Reservas/ReservationPage.j
 
 function App() {
   const location = useLocation();
-  const hideNavbarRoutes = ["/login", "/register","/reserve"]; // Ocultamos el Navbar SOLO en login y register
+  const hideNavbarRoutes = ["/login", "/register"]; // Ocultamos el Navbar SOLO en login y register
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (
     <>
-      {shouldHideNavbar && <Navbar />}
+      
       {shouldHideNavbar && <Navbar />}{/* aca va el Navbar del resto. (capas no hace falta...) */}
        
       <Routes>

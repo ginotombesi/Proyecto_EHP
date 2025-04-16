@@ -1,46 +1,53 @@
 // src/components/ActivityCard.jsx
 import React, { useState } from 'react';
-import Swal from 'sweetalert2';
-//import ReservationModal from '../Reservas/ReservationPage.jsx';
-import './ActivityCard.css';
 import { useNavigate } from 'react-router-dom';
+import './ActivityCard.css';
 
 const ActivityCard = ({ activity }) => {
   const [showDescription, setShowDescription] = useState(false);
   const navigate = useNavigate();
+
   const handleReserve = () => {
-        navigate('/reserve', { state: { activity } });
-  }
+    navigate('/reserve', { state: { activity } });
+  };
 
   const toggleDescription = () => {
     setShowDescription((prev) => !prev);
   };
 
-  
-
   return (
-    
-    <>
-    <div className="activity-card">
-      <div className="activity-info-row">
+    <div className={`activity-card ${activity.name}`}>
+      <div className="activity-header">
         <h3>{activity.name}</h3>
-        <p><strong>Fecha:</strong> {activity.date}</p>
-        <p><strong>Hora:</strong> {activity.time}</p>
-        <p><strong>Fin:</strong> {activity.endTime}</p>
-        <p><strong>Cupos disponibles:</strong> {activity.availableSpots}</p>
-        <button className="reserve-button" onClick={handleReserve}>Reservar</button>
         <button className="toggle-description" onClick={toggleDescription}>
-          {showDescription ? '▲' : '▼'}
+          {showDescription ? '▲ Ocultar' : '▼ Ver más'}
         </button>
       </div>
 
+      <div className="activity-details">
+        <p><strong>📅 Fecha:</strong> {activity.date}</p>
+        <p><strong>🕒 Inicio:</strong> {activity.time}</p>
+        <p><strong>🕔 Fin:</strong> {activity.endTime}</p>
+        <p><strong>🎟️ Cupos:</strong> {activity.availableSpots}</p>
+      </div>
+
       {showDescription && (
-        <p className="activity-description">{activity.description}</p>
+        <div className="activity-description">
+          <p>{activity.description}</p>
+        </div>
       )}
+
+      <div className="activity-footer">
+        <button className="reserve-button" onClick={handleReserve}>
+          Reservar
+        </button>
+      </div>
     </div>
-    </>
   );
 };
 
-
 export default ActivityCard;
+
+
+
+
