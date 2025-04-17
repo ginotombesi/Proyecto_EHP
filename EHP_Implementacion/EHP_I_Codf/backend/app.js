@@ -1,3 +1,4 @@
+
 const express = require('express');
 const app = express();
 const inscripcionRouter = require('./routes/inscripcion.router');
@@ -9,7 +10,14 @@ app.get('/', (req, res) => {
 });
 
 app.use(express.json());
+
 app.use('/reserve', inscripcionRouter);
+
+app
+  .use('/actividad', actividadRouter)
+  .use('/inscripcion', inscripcionRouter)
+  .use('tipoActividad', tipoActividadRouter);
+
 
 app.listen(3000, () => {
   console.log('Servidor corriendo en http://localhost:3000');
