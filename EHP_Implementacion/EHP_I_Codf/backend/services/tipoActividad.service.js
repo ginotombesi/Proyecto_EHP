@@ -1,5 +1,5 @@
 // services/tipoActividadService.js
-const {TipoActividad} = require('../models/tipoActividadModel.js');
+const TipoActividad = require('../models/tipoActividadModel.js');
 
 const crearTipoActividad = async (datos) => {
     return await TipoActividad.create(datos);

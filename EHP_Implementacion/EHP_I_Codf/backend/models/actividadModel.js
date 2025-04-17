@@ -12,6 +12,7 @@ const Actividad = sequelize.define('ACTIVIDAD', {
     tipoActividadId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        field: 'tipoAct',
         references: {
             model: TipoActividad,
             key: 'idTipo',
