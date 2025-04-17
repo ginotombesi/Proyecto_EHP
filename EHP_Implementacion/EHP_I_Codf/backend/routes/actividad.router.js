@@ -19,3 +19,6 @@ actividadRouter.get("/", async (req, res) => {
     }
 })
 
+module.exports = actividadRouter;
+
+

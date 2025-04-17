@@ -16,7 +16,7 @@ app.use('/reserve', inscripcionRouter);
 app
   .use('/actividad', actividadRouter)
   .use('/inscripcion', inscripcionRouter)
-  .use('tipoActividad', tipoActividadRouter);
+  .use('/tipoActividad', tipoActividadRouter);
 
 
 app.listen(3000, () => {
