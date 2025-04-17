@@ -6,7 +6,7 @@ const obtenerActividades = async function () {
     const actividades = await Actividad.findAll();
     return actividades;
   };
-  
+
 module.exports = {
     obtenerActividades,
     // agregarActividad,
