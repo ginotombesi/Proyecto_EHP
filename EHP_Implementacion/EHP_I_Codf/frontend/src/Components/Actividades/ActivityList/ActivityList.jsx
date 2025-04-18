@@ -1,52 +1,50 @@
 // src/components/ActivityList.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ActivityList.css';
 import ActivityCard from '../ActivityCard/ActivityCard.jsx';
 import Clock from '../ActivityCard/Clock.jsx';
-const ActivityList = () => {
+import { obtenerActividades } from '../../../api.js';
 
-  const activities = [
-    {
-      name: 'Tirolesa',
-      time: '10:00 AM',
-      endTime: '11:00 AM',
-      date: '2025-04-20',
-      availableSpots: 5,
-      description: 'Sentí la adrenalina mientras te deslizás a gran velocidad por una tirolesa suspendida entre los árboles. Una experiencia emocionante, segura y perfecta para los amantes de la aventura al aire libre.'
-    },
-    {
-      name: 'Safari',
-      time: '11:30 AM',
-      endTime: '12:30 PM',
-      date: '2025-04-20',
-      availableSpots: 8,
-      description: 'Subite a un vehículo todo terreno y descubrí la fauna silvestre en su hábitat natural. Ideal para toda la familia, este safari guiado combina aventura, educación y contacto con la naturaleza.'
-    },
-    {
-      name: 'Palestra',
-      time: '1:00 PM',
-      endTime: '2:00 PM',
-      date: '2025-04-20',
-      availableSpots: 6,
-      description: 'Poné a prueba tu fuerza y destreza escalando nuestro muro de palestra con distintos niveles de dificultad. Supervisión constante de instructores calificados para garantizar seguridad y diversión.'
-    },
-    {
-      name: 'Jardineria',
-      time: '3:00 PM',
-      endTime: '4:00 PM',
-      date: '2025-04-20',
-      availableSpots: 10,
-      description: 'Disfrutá de un paseo relajante en un carro tipo jardinera por senderos llenos de color y aromas naturales. Una actividad tranquila pensada para grandes y chicos, con vistas espectaculares.'
-    },
-  ];
+const ActivityList = () => {
+  const [activities, setActivities] = useState([]);
+
+  useEffect(() => {
+    const fetchActividades = async () => {
+      try {
+        const response = await obtenerActividades();
+        // Asegurate que los nombres de campos coincidan con lo que devuelve tu backend
+        const data = response.data.map((actividad) => ({
+          name: actividad.nombre || actividad.name || "ESTABLECER RELACION ENTRE TABLAS.(NOMBRE)",
+          time: actividad.horarios || '00:00',
+          endTime: actividad.horaFin || 'CAMBIAR EN LA BASE DE DATOS',
+          date: actividad.fecha || '2025-04-20',
+          availableSpots: actividad.cupo || 0,
+          idTipoActividad : actividad.tipoActividadId || 0,
+          
+          description: actividad.descripcion || 'CAMBIAR EN LA BASE DE DATOS',
+        }));
+        setActivities(data);
+      } catch (error) {
+        console.error('Error al obtener actividades:', error);
+      }
+    };
+
+    fetchActividades();
+  }, []);
 
   return (
     <div className="activity-list-container">
       <Clock />
       <h2 className="activity-title">Actividades Activas</h2>
-      {activities.map((activity, index) => (
-        <ActivityCard key={index} activity={activity} />
-      ))}
+      {activities.length === 0 ? (
+        <p>Cargando actividades...</p>
+      
+      ) : (
+        activities.map((activity, index) => (
+          <ActivityCard key={index} activity={activity} />
+          
+        ))
+      )}
     </div>
   );
 };
