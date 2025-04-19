@@ -195,3 +195,14 @@
   color: #fff !important;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
+
+.actividad-inactiva {
+  color: red !important;
+  font-weight: bold !important;
+  
+}
+.reserve-button:disabled {
+  background-color: #d3d3d3; /* color gris para el botón deshabilitado */
+  cursor: not-allowed; /* cambia el cursor para mostrar que está deshabilitado */
+  opacity: 0.6; /* reduce la opacidad para que se vea inactivo */
+}

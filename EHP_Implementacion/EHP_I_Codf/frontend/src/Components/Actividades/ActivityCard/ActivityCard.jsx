@@ -34,10 +34,13 @@ const ActivityCard = ({ activity }) => {
 
   const imageClass = getActivityImageClass(activity.idTipoActividad);
 
+  const desactiva = activity.estaActiva === 0 ? 'actividad-inactiva' : '';
   return (
     <div className={`activity-card ${imageClass}`}>
       <div className="activity-header">
-        <h3>{activity.name}</h3>
+      <h3 className={desactiva}>
+            {activity.name}
+      </h3>
         <button className="toggle-description" onClick={toggleDescription}>
           {showDescription ? '▲ Ocultar' : '▼ Ver más'}
         </button>
@@ -52,12 +55,15 @@ const ActivityCard = ({ activity }) => {
 
       {showDescription && (
         <div className="activity-description">
-          <p>{activity.description}</p>
+          <p>{activity.descripcion}</p>
         </div>
       )}
 
       <div className="activity-footer">
-        <button className="reserve-button" onClick={handleReserve}>
+        <button 
+        className="reserve-button" 
+        onClick={handleReserve}
+        disabled={activity.estaActiva === 0}>
           Reservar
         </button>
       </div>
