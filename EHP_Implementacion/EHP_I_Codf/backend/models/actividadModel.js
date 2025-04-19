@@ -19,12 +19,12 @@ const Actividad = sequelize.define('ACTIVIDAD', {
         },
     },
     horaInicio: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
         defaultValue: sequelize.NOW
     },
     horaFin: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
         defaultValue: sequelize.NOW
     },

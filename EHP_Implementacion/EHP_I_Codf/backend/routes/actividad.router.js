@@ -6,9 +6,7 @@ const actividadRouter = appExpress.Router();
 actividadRouter.get("/", async (req, res) => {
     try{
         let actividades = null;
-
         actividades = await actividadesService.obtenerActividades();
-
         res.json(actividades);
     }
     catch (error){

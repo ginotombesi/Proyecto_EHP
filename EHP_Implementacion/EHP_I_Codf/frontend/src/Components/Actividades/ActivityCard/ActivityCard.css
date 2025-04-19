@@ -206,3 +206,53 @@
   cursor: not-allowed; /* cambia el cursor para mostrar que está deshabilitado */
   opacity: 0.6; /* reduce la opacidad para que se vea inactivo */
 }
+
+
+/*FILTROS*/
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  justify-content: center;
+}
+
+.filter-bar input,
+.filter-bar button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.filter-bar input:focus {
+  border-color: #00bcd4;
+  outline: none;
+}
+
+.filter-bar button {
+  background-color: #ff5a5f;
+  color: white;
+  border: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.filter-bar button:hover {
+  background-color: #e14e52;
+}
+
+.filter-bar .clear-button {
+  background-color: #ccc;
+  color: #222;
+}
+
+.filter-bar .clear-button:hover {
+  background-color: #bbb;
+}
