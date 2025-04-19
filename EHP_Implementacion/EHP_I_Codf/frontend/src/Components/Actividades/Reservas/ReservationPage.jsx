@@ -3,21 +3,19 @@ import './ReservationPage.css';
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 
-const shoeSizes = Array.from({ length: 23 }, (_, i) => (22 + i).toString());
-const shirtSizes = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
-const pantsSizes = Array.from({ length: 13 }, (_, i) => (38 + i).toString());
+const talles = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
 
 const ReservationPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const activity = location.state?.activity;
+  const requiereVest = activity?.necesitaTalle === 1;
+ 
   const [formData, setFormData] = useState({
     fullName: '',
     dni: '',
     age: '',
-    shoeSize: '',
-    shirtSize: '',
-    pantsSize: ''
+    talles: ''
   });
 
   const [persons, setPersons] = useState([]);
@@ -37,9 +35,11 @@ const ReservationPage = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    Object.entries(formData).forEach(([key, value]) => {
-      if (!value.trim()) newErrors[key] = 'Este campo es obligatorio';
-    });
+    if (!formData.fullName.trim()) newErrors.fullName = 'Este campo es obligatorio';
+    if (!formData.dni.trim()) newErrors.dni = 'Este campo es obligatorio';
+    if (!formData.age.trim()) newErrors.age = 'Este campo es obligatorio';
+    if (requiereVest && !formData.talles.trim()) newErrors.talles = 'Este campo es obligatorio';
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -62,9 +62,7 @@ const ReservationPage = () => {
       fullName: '',
       dni: '',
       age: '',
-      shoeSize: '',
-      shirtSize: '',
-      pantsSize: ''
+      talles: ''
     });
     setErrors({});
   };
@@ -108,8 +106,6 @@ const ReservationPage = () => {
       <h2>Reservar para: {activity.name}</h2>
       <p>Cupos disponibles: {activity.availableSpots - persons.length}</p>
 
-      
-
       <div className="person-form-wrapper">
         <label>Nombre Completo</label>
         <input
@@ -120,7 +116,6 @@ const ReservationPage = () => {
           onChange={handleChange}
           disabled={isFull}
         />
-        {isFull && <span className="error">Se alcanzó el límite de cupos</span>}
         {errors.fullName && <span className="error">{errors.fullName}</span>}
 
         <label>DNI</label>
@@ -132,7 +127,6 @@ const ReservationPage = () => {
           onChange={handleChange}
           disabled={isFull}
         />
-        {isFull && <span className="error">Se alcanzó el límite de cupos</span>}
         {errors.dni && <span className="error">{errors.dni}</span>}
 
         <label>Edad</label>
@@ -144,53 +138,25 @@ const ReservationPage = () => {
           onChange={handleChange}
           disabled={isFull}
         />
-        {isFull && <span className="error">Se alcanzó el límite de cupos</span>}
         {errors.age && <span className="error">{errors.age}</span>}
 
-        <label>Talla de Zapatos</label>
-        <select
-          name="shoeSize"
-          value={formData.shoeSize}
-          onChange={handleChange}
-          disabled={isFull}
-        >
-          <option value="">Seleccionar</option>
-          {shoeSizes.map(size => (
-            <option key={size} value={size}>{size}</option>
-          ))}
-        </select>
-        
-        {errors.shoeSize && <span className="error">{errors.shoeSize}</span>}
-
-        <label>Talla de Remera/Campera</label>
-        <select
-          name="shirtSize"
-          value={formData.shirtSize}
-          onChange={handleChange}
-          disabled={isFull}
-        >
-          <option value="">Seleccionar</option>
-          {shirtSizes.map(size => (
-            <option key={size} value={size}>{size}</option>
-          ))}
-        </select>
-        {isFull && <span className="error">Se alcanzó el límite de cupos</span>}
-        {errors.shirtSize && <span className="error">{errors.shirtSize}</span>}
-
-        <label>Talla de Pantalón</label>
-        <select
-          name="pantsSize"
-          value={formData.pantsSize}
-          onChange={handleChange}
-          disabled={isFull}
-        >
-          <option value="">Seleccionar</option>
-          {pantsSizes.map(size => (
-            <option key={size} value={size}>{size}</option>
-          ))}
-        </select>
-        {isFull && <span className="error">Se alcanzó el límite de cupos</span>}
-        {errors.pantsSize && <span className="error">{errors.pantsSize}</span>}
+        {requiereVest && (
+          <>
+            <label>Talla de Arnés</label>
+            <select
+              name="talles"
+              value={formData.talles}
+              onChange={handleChange}
+              disabled={isFull}
+            >
+              <option value="">Seleccionar</option>
+              {talles.map(size => (
+                <option key={size} value={size}>{size}</option>
+              ))}
+            </select>
+            {errors.talles && <span className="error">{errors.talles}</span>}
+          </>
+        )}
 
         {!isFull && <button onClick={addPerson}>+ Agregar Persona</button>}
       </div>
@@ -201,7 +167,9 @@ const ReservationPage = () => {
             <p><strong>Nombre:</strong> {person.fullName}</p>
             <p><strong>DNI:</strong> {person.dni}</p>
             <p><strong>Edad:</strong> {person.age}</p>
-            <p><strong>Tallas:</strong> Zapato {person.shoeSize} - Remera {person.shirtSize} - Pantalón {person.pantsSize}</p>
+            {requiereVest && (
+              <p><strong>Talla:</strong> {person.talles}</p>
+            )}
             <button className="remove-button" onClick={() => removePerson(index)}>Eliminar</button>
           </div>
         ))}
@@ -212,7 +180,7 @@ const ReservationPage = () => {
         onClick={handleConfirmReservation}
         disabled={persons.length === 0}
       >
-        📝 Reservar
+        Reservar
       </button>
 
       <button onClick={onBack}>← Volver</button>

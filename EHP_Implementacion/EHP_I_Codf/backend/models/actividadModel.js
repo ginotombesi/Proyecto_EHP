@@ -18,13 +18,20 @@ const Actividad = sequelize.define('ACTIVIDAD', {
             key: 'idTipo',
         },
     },
-    horarios: {
-        type: DataTypes.TEXT,
+    horaInicio: {
+        type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: sequelize.NOW
+    },
+    horaFin: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: sequelize.NOW
     },
     fecha: {
-        type: DataTypes.TEXT,
+        type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: sequelize.NOW
     },
     cupo: {
         type: DataTypes.INTEGER,
@@ -35,6 +42,9 @@ const Actividad = sequelize.define('ACTIVIDAD', {
     },
     activa: {
         type: DataTypes.INTEGER,
+    },
+    descripcion: {
+        type : DataTypes.TEXT,
     }
 }, {
     tableName: 'ACTIVIDAD',

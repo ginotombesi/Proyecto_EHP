@@ -14,15 +14,17 @@ const ActivityList = () => {
         const response = await obtenerActividades();
         // Asegurate que los nombres de campos coincidan con lo que devuelve tu backend
         const data = response.data.map((actividad) => ({
-          name: actividad.nombre || actividad.name || "ESTABLECER RELACION ENTRE TABLAS.(NOMBRE)",
-          time: actividad.horarios || '00:00',
-          endTime: actividad.horaFin || 'CAMBIAR EN LA BASE DE DATOS',
-          date: actividad.fecha || '2025-04-20',
+          name: actividad.tipoActividad.descripcion  || "No tiene Nombre",
+          time: actividad.horaInicio || 'Sin Hora Inicio',
+          endTime: actividad.horaFin || 'sin Hora Fin',
+          date: actividad.fecha || 'sin Fecha',
           availableSpots: actividad.cupo || 0,
+          estaActiva : actividad.activa, //se supone que siempre es 1 o 0
           idTipoActividad : actividad.tipoActividadId || 0,
-          
-          description: actividad.descripcion || 'CAMBIAR EN LA BASE DE DATOS',
+          necesitaTalle : actividad.tipoActividad.requiereVest || 2, //se supone que siempre es 1 o 0
+          descripcion: actividad.descripcion || 'Disfruta la experiencia.',
         }));
+        
         setActivities(data);
       } catch (error) {
         console.error('Error al obtener actividades:', error);
@@ -35,6 +37,7 @@ const ActivityList = () => {
   return (
     <div className="activity-list-container">
       <Clock />
+      
       <h2 className="activity-title">Actividades Activas</h2>
       {activities.length === 0 ? (
         <p>Cargando actividades...</p>
