@@ -6,6 +6,7 @@ import './ActivityCard.css';
 const ActivityCard = ({ activity }) => {
   const [showDescription, setShowDescription] = useState(false);
   const navigate = useNavigate();
+ 
 
   const handleReserve = () => {
     navigate('/reserve', { state: { activity } });

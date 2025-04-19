@@ -51,3 +51,18 @@
 .activity-card:hover {
   transform: translateY(-4px);
 }
+
+hr {
+  border: none;
+  height: 2px;
+  background-color: #FF385C;
+  border-radius: 4px;
+  margin-top: 40px;
+}
+
+h3 {
+  font-size: 28px;
+  margin-top: 0;
+  color: #ffffff;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+}
