@@ -203,3 +203,8 @@ body {
     padding: 14px;
   }
 }
+.edad-advertencia {
+  font-size: 0.99em;
+  color: #666;
+  margin-left: 6px;
+}
