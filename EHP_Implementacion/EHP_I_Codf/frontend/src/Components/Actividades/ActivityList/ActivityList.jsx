@@ -107,7 +107,7 @@ const ActivityList = () => {
       ) : (
         <>
           {future.map((activity, index) => (
-            <ActivityCard key={`fut-${index}`} activity={activity} />
+            <ActivityCard key={`fut-${index}`} activity={activity} isPast={false} />
           ))}
 
           {past.length > 0 && (
@@ -115,7 +115,7 @@ const ActivityList = () => {
               <hr style={{ margin: '2rem 0', borderColor: '#aaa', width: '80%' }} />
               <h3 style={{ color: 'white', textAlign: 'center' }}>Actividades Pasadas</h3>
               {past.map((activity, index) => (
-                <ActivityCard key={`past-${index}`} activity={activity} />
+                <ActivityCard key={`past-${index}`} activity={activity} isPast={true} />
               ))}
             </>
           )}
