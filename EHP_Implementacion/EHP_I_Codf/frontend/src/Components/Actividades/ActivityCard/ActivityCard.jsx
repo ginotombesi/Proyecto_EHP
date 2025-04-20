@@ -35,11 +35,11 @@ const ActivityCard = ({ activity }) => {
 
   const imageClass = getActivityImageClass(activity.idTipoActividad);
 
-  const desactiva = activity.estaActiva === 0 ? 'actividad-inactiva' : '';
+  
   return (
     <div className={`activity-card ${imageClass}`}>
       <div className="activity-header">
-      <h3 className={desactiva}>
+      <h3>
             {activity.name}
       </h3>
         <button className="toggle-description" onClick={toggleDescription}>

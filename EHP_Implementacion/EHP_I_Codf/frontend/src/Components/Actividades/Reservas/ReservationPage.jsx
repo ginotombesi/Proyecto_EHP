@@ -10,7 +10,7 @@ const ReservationPage = () => {
   const navigate = useNavigate();
   const activity = location.state?.activity;
   const requiereVest = activity?.necesitaTalle === 1;
- 
+  console.log(activity)
   const [formData, setFormData] = useState({
     fullName: '',
     dni: '',
@@ -35,14 +35,72 @@ const ReservationPage = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.fullName.trim()) newErrors.fullName = 'Este campo es obligatorio';
-    if (!formData.dni.trim()) newErrors.dni = 'Este campo es obligatorio';
-    if (!formData.age.trim()) newErrors.age = 'Este campo es obligatorio';
-    if (requiereVest && !formData.talles.trim()) newErrors.talles = 'Este campo es obligatorio';
-
+  
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Este campo es obligatorio';
+    }
+  
+    if (!formData.dni.trim()) {
+      newErrors.dni = 'Este campo es obligatorio';
+    } else if (!/^\d{8}$/.test(formData.dni)) {
+      newErrors.dni = 'El DNI debe tener exactamente 8 números';
+    } else if (persons.some(p => p.dni === formData.dni)) {
+      newErrors.dni = 'Este DNI ya fue ingresado';
+    }
+  
+    if (!formData.age.trim()) {
+      newErrors.age = 'Este campo es obligatorio';
+    } else {
+      const ageValue = parseInt(formData.age, 10);
+      const actividadId = activity?.idActividad;
+  
+      if (isNaN(ageValue)) {
+        newErrors.age = 'La edad debe ser un número válido';
+      } else {
+        if (actividadId === 2 || actividadId === 4) {
+          if (ageValue < 10) {
+            newErrors.age = 'Para esta actividad la edad mínima es de 10 años';
+          } else if (ageValue > 80) {
+            newErrors.age = 'La edad máxima para esta actividad es de 80 años';
+          }
+        } else if (actividadId === 1 || actividadId === 3) {
+          if (ageValue < 3) {
+            newErrors.age = 'La edad mínima para esta actividad es de 3 años';
+          } else if (ageValue > 100) {
+            newErrors.age = 'Por favor, ingrese una edad válida (máx. 100 años)';
+          }
+        } else {
+          if (ageValue < 3) {
+            newErrors.age = 'La edad no puede ser menor a 3 años';
+          } else if (ageValue > 100) {
+            newErrors.age = 'Por favor, ingrese una edad válida (máx. 100 años)';
+          }
+        }
+      }
+    }
+  
+    if (requiereVest && !formData.talles.trim()) {
+      newErrors.talles = 'Este campo es obligatorio';
+    }
+  
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  
+  const getEdadAdvertencia = () => {
+    const actividadId = activity?.idTipoActividad
+  ;
+    console.log(actividadId)
+    if (actividadId === 2 || actividadId === 4) {
+      return 'Edad permitida: de 10 a 80 años (actividad de alto riesgo)';
+    } else if (actividadId === 1 || actividadId === 3) {
+      return 'Edad permitida: de 3 a 100 años';
+    } else {
+      return 'Edad permitida: de 3 a 100 años';
+    }
+  };
+  
+  
 
   const addPerson = () => {
     if (persons.length >= activity.availableSpots) {
@@ -129,7 +187,9 @@ const ReservationPage = () => {
         />
         {errors.dni && <span className="error">{errors.dni}</span>}
 
-        <label>Edad</label>
+        <label>Edad
+        <span className="edad-advertencia"> – {getEdadAdvertencia()}</span>
+        </label>
         <input
           type="number"
           name="age"
@@ -142,7 +202,7 @@ const ReservationPage = () => {
 
         {requiereVest && (
           <>
-            <label>Talla de Arnés</label>
+            <label>{activity.idTipoActividad === 3 ? 'Talla de Conjunto' : 'Talla de Arnés'}</label>
             <select
               name="talles"
               value={formData.talles}
@@ -166,7 +226,7 @@ const ReservationPage = () => {
           <div key={index} className="person-card">
             <p><strong>Nombre:</strong> {person.fullName}</p>
             <p><strong>DNI:</strong> {person.dni}</p>
-            <p><strong>Edad:</strong> {person.age}</p>
+            <p><strong>Edad:</strong> {person.age} años</p>
             {requiereVest && (
               <p><strong>Talla:</strong> {person.talles}</p>
             )}

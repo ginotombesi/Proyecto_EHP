@@ -6,8 +6,10 @@ const API_BASE = 'http://localhost:3000'; // Ajustá esto si usás otro puerto o
 // ================== INSCRIPCIONES ==================
 
 export const crearInscripcion = (datos) =>
-  axios.post(`${API_BASE}/inscripcion`, datos);
+  axios.post(`${API_BASE}/inscripcion`, datos); //aca deberia tener asociada la actividad como query.
 
+
+//no hace falta.
 export const obtenerInscripciones = () =>
   axios.get(`${API_BASE}/inscripcion`);
 
