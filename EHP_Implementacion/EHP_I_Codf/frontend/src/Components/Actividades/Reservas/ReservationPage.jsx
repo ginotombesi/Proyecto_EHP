@@ -11,14 +11,24 @@ const ReservationPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const activity = actividad;
-  const requiereVest = activity?.necesitaTalle === 1;
-   //aceptacion terminos y condiciones
+  const requiereVest = actividad?.tipoActividad?.requiereVest;
+  const descripcion = actividad?.tipoActividad?.descripcion;
+  const cupo = actividad?.cupo;
+ 
+
+  //aceptacion terminos y condiciones
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [termsError, setTermsError] = useState('');
  
   useEffect(() => {
-    axios.get(`http://localhost:3000/actividad/${idActividad}`)
-        .then(res => setActividad(res.data))
+    axios.get(`http://localhost:3000/actividad`)
+    
+        .then(res => {
+          console.log('Respuesta de la API:', res.data);  // <-- revisá esto
+          const actividadEncontrada = res.data.find(act => act.idActividad === parseInt(idActividad));
+          setActividad(actividadEncontrada);
+          console.log('Respuesta de la API formato:', actividadEncontrada)
+    })
         .catch(err => console.error(err));
 }, [idActividad]);
 
@@ -183,7 +193,7 @@ const ReservationPage = () => {
   
   return (
     <div className="reservation-page">
-      <h2>Reservar para: {actividad.nombre}</h2> 
+      <h2>Reservar para: {descripcion}</h2> 
       <p>Cupos disponibles: {actividad.cupo - persons.length}</p>
 
       <div className="person-form-wrapper">
@@ -222,25 +232,24 @@ const ReservationPage = () => {
         />
         {errors.age && <span className="error">{errors.age}</span>}
 
-        {requiereVest && (
-          <>
-            <label>{actividad.idTipoActividad === 3 ? 'Talla de Conjunto' : 'Talla de Arnés'}</label>
-            <select
-              name="talles"
-              value={formData.talles}
-              onChange={handleChange}
-              disabled={isFull}
-            >
-              <option value="">Seleccionar</option>
-              {talles.map(size => (
-                <option key={size} value={size}>{size}</option>
-              ))}
-            </select>
-            {errors.talles && <span className="error">{errors.talles}</span>}
-          </>
-        )}
-
-        {!isFull && <button onClick={addPerson}>+ Agregar Persona</button>}
+        {actividad?.tipoActividad?.requiereVest === 1 && (
+            <>
+              <label>{actividad.tipoActividadId === 3 ? 'Talla de Conjunto' : 'Talla de Arnés'}</label>
+              <select
+                name="talles"
+                value={formData.talles}
+                onChange={handleChange}
+                disabled={isFull}
+              >
+                <option value="">Seleccionar</option>
+                {talles.map(size => (
+                  <option key={size} value={size}>{size}</option>
+                ))}
+              </select>
+              {errors.talles && <span className="error">{errors.talles}</span>}
+            </>
+          )}
+          {!isFull && <button onClick={addPerson}>+ Agregar Persona</button>}
       </div>
 
       <div className="person-cards-container">
