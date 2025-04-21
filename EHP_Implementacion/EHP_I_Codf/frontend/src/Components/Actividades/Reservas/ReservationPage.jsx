@@ -15,8 +15,8 @@ const ReservationPage = () => {
   const descripcion = actividad?.tipoActividad?.descripcion;
   const cupo = actividad?.cupo;
  
-
-  //aceptacion terminos y condiciones
+  
+   //aceptacion terminos y condiciones
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [termsError, setTermsError] = useState('');
  
@@ -162,6 +162,12 @@ const ReservationPage = () => {
   };
 
   const handleConfirmReservation = () => {
+
+    if (!acceptedTerms) {
+      setTermsError('Debe aceptar los términos y condiciones para continuar.');
+      return;
+    }
+
     Promise.all(persons.map(persona =>
       crearInscripcion({
         dni: persona.dni,
@@ -232,7 +238,7 @@ const ReservationPage = () => {
         />
         {errors.age && <span className="error">{errors.age}</span>}
 
-        {actividad?.tipoActividad?.requiereVest === 1 && (
+        {requiereVest === 1 && (
             <>
               <label>{actividad.tipoActividadId === 3 ? 'Talla de Conjunto' : 'Talla de Arnés'}</label>
               <select
