@@ -11,7 +11,9 @@ Actividad.belongsTo(TipoActividad, {
   targetKey: 'idTipo',
   as: 'tipoActividad'
 });
-
+const obtenerActividadPorId = async (id) => {
+  return await Actividad.findOne({ where: { idActividad: id } });
+};
 const obtenerActividades = async function () {
   const actividades = await Actividad.findAll({
     include: {
@@ -47,4 +49,5 @@ const obtenerActividades = async function () {
 
 module.exports = {
   obtenerActividades,
+  obtenerActividadPorId
 };

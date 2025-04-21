@@ -14,7 +14,7 @@ function App() {
         
         
         <Route path="/activities" element={<ActivityList />} />
-        <Route path="/reserve" element={<ReservationPage />} />
+        <Route path="/reserve/:idActividad" element={<ReservationPage />} />
       </Routes>
     </>
   );
