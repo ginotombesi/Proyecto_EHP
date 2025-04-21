@@ -145,6 +145,23 @@ body {
   background-color: #000;
 }
 
+/*Check list de terminos y condiciones*/
+.terms-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.terms-container input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.terms-container .error {
+  display: block;
+  color: red;
+  margin-top: 5px;
+}
+
 /* Botón Volver */
 .reservation-page > button {
   margin-top: 32px;

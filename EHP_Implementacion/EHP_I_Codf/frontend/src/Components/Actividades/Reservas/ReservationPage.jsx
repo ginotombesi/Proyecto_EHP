@@ -21,6 +21,10 @@ const ReservationPage = () => {
   const [persons, setPersons] = useState([]);
   const [errors, setErrors] = useState({});
 
+  //aceptacion terminos y condiciones
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [termsError, setTermsError] = useState('');
+
   if (!activity) {
     navigate('/activities');
     return null;
@@ -136,6 +140,12 @@ const ReservationPage = () => {
   };
 
   const handleConfirmReservation = () => {
+    
+    if (!acceptedTerms) {
+      setTermsError('Debe aceptar los términos y condiciones para continuar.');
+      return;
+    }
+
     Swal.fire({
       title: '¿Confirmar reserva?',
       text: `Estás por reservar ${persons.length} lugar(es) para "${activity.name}".`,
@@ -233,6 +243,21 @@ const ReservationPage = () => {
             <button className="remove-button" onClick={() => removePerson(index)}>Eliminar</button>
           </div>
         ))}
+      </div>
+
+      <div className="terms-container">
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptedTerms}
+              onChange={() => {
+                setAcceptedTerms(!acceptedTerms);
+                setTermsError('');
+              }}
+            />
+            Acepto los <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">términos y condiciones</a>
+          </label>
+          {termsError && <span className="error">{termsError}</span>}
       </div>
 
       <button
