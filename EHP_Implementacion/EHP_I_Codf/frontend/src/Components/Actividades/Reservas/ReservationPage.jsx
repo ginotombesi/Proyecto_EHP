@@ -12,7 +12,10 @@ const ReservationPage = () => {
   const navigate = useNavigate();
   const activity = actividad;
   const requiereVest = activity?.necesitaTalle === 1;
+<<<<<<< HEAD
 
+=======
+>>>>>>> f4a7eaac0bdbed7c044cd553349dc2044d26f1c8
    //aceptacion terminos y condiciones
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [termsError, setTermsError] = useState('');
