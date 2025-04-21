@@ -1,7 +1,7 @@
 // services/inscripcionService.js
 const Actividad = require('../models/actividadModel');
 const Inscripcion = require('../models/inscripcionModel');
-
+const TipoActividad = require('../models/tipoActividadModel')
 const crearInscripcion = async (datos) => {
   const { actividad } = datos;
 

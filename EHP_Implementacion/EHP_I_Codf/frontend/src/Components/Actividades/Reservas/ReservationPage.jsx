@@ -1,56 +1,40 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ReservationPage.css';
-import { useLocation, useNavigate, useParams} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-const talles = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
 import { crearInscripcion } from '../../../api';
+
+const talles = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+
 const ReservationPage = () => {
-  const {idActividad} = useParams();
+  const { idActividad } = useParams();
   const [actividad, setActividad] = useState(null);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const activity = actividad;
-  const requiereVest = actividad?.tipoActividad?.requiereVest;
-  const descripcion = actividad?.tipoActividad?.descripcion;
-  const cupo = actividad?.cupo;
- 
-  
-   //aceptacion terminos y condiciones
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [termsError, setTermsError] = useState('');
- 
-  useEffect(() => {
-    axios.get(`http://localhost:3000/actividad`)
-    
-        .then(res => {
-          console.log('Respuesta de la API:', res.data);  // <-- revisá esto
-          const actividadEncontrada = res.data.find(act => act.idActividad === parseInt(idActividad));
-          setActividad(actividadEncontrada);
-          console.log('Respuesta de la API formato:', actividadEncontrada)
-    })
-        .catch(err => console.error(err));
-}, [idActividad]);
-
-
-
   const [formData, setFormData] = useState({
     fullName: '',
     dni: '',
     age: '',
     talles: ''
   });
+  const [pendingPersons, setPendingPersons] = useState([]);
+  const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
 
-  const [persons, setPersons] = useState([]);
-  const [errors, setErrors] = useState({});
+  const requiereVest = actividad?.tipoActividad?.requiereVest === 1;
+  const descripcion = actividad?.tipoActividad?.descripcion;
 
-  if (!actividad) {
-    return <p>Cargando Inscripcion a la actividad...</p>;}
- 
-  if (!activity) {
-    navigate('/activities');
-    return null;
-  }
+  useEffect(() => {
+    axios.get('http://localhost:3000/actividad')
+      .then(res => {
+        const actividadEncontrada = res.data.find(act => act.idActividad === parseInt(idActividad));
+        setActividad(actividadEncontrada);
+      })
+      .catch(err => console.error(err));
+  }, [idActividad]);
+
+  if (!actividad) return <p>Cargando Inscripción a la actividad...</p>;
 
   const handleChange = (e) => {
     setFormData({
@@ -61,75 +45,49 @@ const ReservationPage = () => {
 
   const validateForm = () => {
     const newErrors = {};
-  
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Este campo es obligatorio';
-    }
-  
+
+    if (!formData.fullName.trim()) newErrors.fullName = 'Este campo es obligatorio';
     if (!formData.dni.trim()) {
       newErrors.dni = 'Este campo es obligatorio';
     } else if (!/^\d{8}$/.test(formData.dni)) {
       newErrors.dni = 'El DNI debe tener exactamente 8 números';
-    } else if (persons.some(p => p.dni === formData.dni)) {
+    } else if (pendingPersons.some(p => p.dni === formData.dni)) {
       newErrors.dni = 'Este DNI ya fue ingresado';
     }
-  
+
     if (!formData.age.trim()) {
       newErrors.age = 'Este campo es obligatorio';
     } else {
       const ageValue = parseInt(formData.age, 10);
       const actividadId = actividad?.tipoActividadId;
-  
+
       if (isNaN(ageValue)) {
         newErrors.age = 'La edad debe ser un número válido';
       } else {
-        if (actividadId === 2 || actividadId === 4) {
-          if (ageValue < 10) {
-            newErrors.age = 'Para esta actividad la edad mínima es de 10 años';
-          } else if (ageValue > 80) {
-            newErrors.age = 'La edad máxima para esta actividad es de 80 años';
-          }
-        } else if (actividadId === 1 || actividadId === 3) {
-          if (ageValue < 3) {
-            newErrors.age = 'La edad mínima para esta actividad es de 3 años';
-          } else if (ageValue > 100) {
-            newErrors.age = 'Por favor, ingrese una edad válida (máx. 100 años)';
-          }
+        if ([2, 4].includes(actividadId)) {
+          if (ageValue < 10 || ageValue > 80) newErrors.age = 'Edad permitida: de 10 a 80 años';
         } else {
-          if (ageValue < 3) {
-            newErrors.age = 'La edad no puede ser menor a 3 años';
-          } else if (ageValue > 100) {
-            newErrors.age = 'Por favor, ingrese una edad válida (máx. 100 años)';
-          }
+          if (ageValue < 3 || ageValue > 100) newErrors.age = 'Edad permitida: de 3 a 100 años';
         }
       }
     }
-  
+
     if (requiereVest && !formData.talles.trim()) {
       newErrors.talles = 'Este campo es obligatorio';
     }
-  
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  
+
   const getEdadAdvertencia = () => {
-    const actividadId = actividad?.tipoActividadId
-  ;
-    
-    if (actividadId === 2 || actividadId === 4) {
-      return 'Edad permitida: de 10 a 80 años (actividad de alto riesgo)';
-    } else if (actividadId === 1 || actividadId === 3) {
-      return 'Edad permitida: de 3 a 100 años';
-    } else {
-      return 'Edad permitida: de 3 a 100 años';
-    }
+    const actividadId = actividad?.tipoActividadId;
+    if ([2, 4].includes(actividadId)) return 'Edad permitida: de 10 a 80 años (actividad de alto riesgo)';
+    return 'Edad permitida: de 3 a 100 años';
   };
-  
-  
 
   const addPerson = () => {
-    if (persons.length >= actividad.availableSpots) {
+    if (pendingPersons.length >= actividad.cupo) {
       Swal.fire({
         icon: 'info',
         title: '¡Sin cupos!',
@@ -141,157 +99,150 @@ const ReservationPage = () => {
 
     if (!validateForm()) return;
 
-    setPersons([...persons, formData]);
-    setFormData({
-      fullName: '',
-      dni: '',
-      age: '',
-      talles: ''
-    });
+    setPendingPersons([...pendingPersons, formData]);
+    setFormData({ fullName: '', dni: '', age: '', talles: '' });
     setErrors({});
   };
 
   const removePerson = (index) => {
-    const updated = [...persons];
+    const updated = [...pendingPersons];
     updated.splice(index, 1);
-    setPersons(updated);
+    setPendingPersons(updated);
   };
 
-  const onBack = () => {
-    navigate('/activities');
-  };
+  const onBack = () => navigate('/activities');
 
   const handleConfirmReservation = () => {
-
     if (!acceptedTerms) {
       setTermsError('Debe aceptar los términos y condiciones para continuar.');
       return;
     }
-
-    Promise.all(persons.map(persona =>
-      crearInscripcion({
-        dni: persona.dni,
-        nombre: persona.fullName,
-        edad: persona.age,
-        actividad: actividad.idActividad,
-        talle: persona.talles || null,
-         // por si lo usás dentro del modelo
-      }, actividad.idActividad)
-    ))
-      .then(() => {
-        Swal.fire({
-          title: '¡Reserva confirmada!',
-          icon: 'success',
-          confirmButtonText: 'OK',
-        }).then(() => navigate('/activities'));
-      })
-      .catch((err) => {
-        console.error('Error al crear inscripciones:', err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'No se pudo completar la reserva. Intenta nuevamente.',
-        });
-      });
-  };
-
-  const isFull = persons.length >= actividad.cupo;
   
+    Promise.allSettled(
+      pendingPersons.map(persona =>
+        crearInscripcion({
+          dni: persona.dni,
+          nombre: persona.fullName,
+          edad: persona.age,
+          actividad: actividad.idActividad,
+          talle: persona.talles || null
+        }, actividad.idActividad)
+      )
+    ).then((results) => {
+      const errores = [];
+      const exitosas = [];
+  
+      results.forEach((result, index) => {
+        const persona = pendingPersons[index];
+        if (result.status === 'fulfilled') {
+          exitosas.push(persona);
+        } else {
+          const mensajeError = result.reason?.response?.data?.error || 'Error desconocido al registrar inscripción.';
+          errores.push({
+            persona,
+            mensaje: mensajeError
+          });
+        }
+      });
+  
+      // Actualizar estado: dejamos solo los que fallaron, en caso de querer reintentar
+      const pendientesRestantes = pendingPersons.filter(p =>
+        errores.some(e => e.persona.dni === p.dni)
+      );
+      setPendingPersons(pendientesRestantes);
+  
+      // Generar mensaje de resumen
+      let htmlMensaje = '';
+      if (exitosas.length > 0) {
+        htmlMensaje += `<h4 style="color:green;">Inscripciones registradas con éxito:</h4>`;
+        htmlMensaje += exitosas.map(p =>
+          `<p>✅ ${p.fullName} (DNI: ${p.dni})</p>`
+        ).join('');
+      }
+  
+      if (errores.length > 0) {
+        htmlMensaje += `<h4 style="color:red; margin-top: 1rem;">Inscripciones rechazadas:</h4>`;
+        htmlMensaje += errores.map(e =>
+          `<p>❌ ${e.persona.fullName} (DNI: ${e.persona.dni}): ${e.mensaje}</p>`
+        ).join('');
+      }
+  
+      Swal.fire({
+        icon: errores.length > 0 ? 'warning' : 'success',
+        title: 'Resultado de la inscripción',
+        html: htmlMensaje,
+        confirmButtonText: 'Aceptar'
+      }).then(() => {
+        setErrors({});
+        if (errores.length === 0) {
+          navigate('/activities');
+        }
+      });
+    });
+  };
+  
+  
+
+  const isFull = pendingPersons.length >= actividad.cupo;
+
   return (
     <div className="reservation-page">
-      <h2>Reservar para: {descripcion}</h2> 
-      <p>Cupos disponibles: {actividad.cupo - persons.length}</p>
+      <h2>Reservar para: {descripcion}</h2>
+      <p>Cupos disponibles: {actividad.cupo - pendingPersons.length}</p>
 
       <div className="person-form-wrapper">
         <label>Nombre Completo</label>
-        <input
-          type="text"
-          name="fullName"
-          placeholder="Nombre completo"
-          value={formData.fullName}
-          onChange={handleChange}
-          disabled={isFull}
-        />
+        <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} disabled={isFull} />
         {errors.fullName && <span className="error">{errors.fullName}</span>}
 
         <label>DNI</label>
-        <input
-          type="text"
-          name="dni"
-          placeholder="DNI"
-          value={formData.dni}
-          onChange={handleChange}
-          disabled={isFull}
-        />
+        <input type="text" name="dni" value={formData.dni} onChange={handleChange} disabled={isFull} />
         {errors.dni && <span className="error">{errors.dni}</span>}
 
-        <label>Edad
-        <span className="edad-advertencia"> – {getEdadAdvertencia()}</span>
-        </label>
-        <input
-          type="number"
-          name="age"
-          placeholder="Edad"
-          value={formData.age}
-          onChange={handleChange}
-          disabled={isFull}
-        />
+        <label>Edad <span className="edad-advertencia">– {getEdadAdvertencia()}</span></label>
+        <input type="number" name="age" value={formData.age} onChange={handleChange} disabled={isFull} />
         {errors.age && <span className="error">{errors.age}</span>}
 
-        {requiereVest === 1 && (
-            <>
-              <label>{actividad.tipoActividadId === 3 ? 'Talla de Conjunto' : 'Talla de Arnés'}</label>
-              <select
-                name="talles"
-                value={formData.talles}
-                onChange={handleChange}
-                disabled={isFull}
-              >
-                <option value="">Seleccionar</option>
-                {talles.map(size => (
-                  <option key={size} value={size}>{size}</option>
-                ))}
-              </select>
-              {errors.talles && <span className="error">{errors.talles}</span>}
-            </>
-          )}
-          {!isFull && <button onClick={addPerson}>+ Agregar Persona</button>}
+        {requiereVest && (
+          <>
+            <label>{actividad.tipoActividadId === 3 ? 'Talla de Conjunto' : 'Talla de Arnés'}</label>
+            <select name="talles" value={formData.talles} onChange={handleChange} disabled={isFull}>
+              <option value="">Seleccionar</option>
+              {talles.map(size => (
+                <option key={size} value={size}>{size}</option>
+              ))}
+            </select>
+            {errors.talles && <span className="error">{errors.talles}</span>}
+          </>
+        )}
+
+        {!isFull && <button onClick={addPerson}>+ Agregar Persona</button>}
       </div>
 
       <div className="person-cards-container">
-        {persons.map((person, index) => (
+        {pendingPersons.map((person, index) => (
           <div key={index} className="person-card">
             <p><strong>Nombre:</strong> {person.fullName}</p>
             <p><strong>DNI:</strong> {person.dni}</p>
             <p><strong>Edad:</strong> {person.age} años</p>
-            {requiereVest && (
-              <p><strong>Talla:</strong> {person.talles}</p>
-            )}
+            {requiereVest && <p><strong>Talla:</strong> {person.talles}</p>}
             <button className="remove-button" onClick={() => removePerson(index)}>Eliminar</button>
           </div>
         ))}
       </div>
 
       <div className="terms-container">
-          <label>
-            <input
-              type="checkbox"
-              checked={acceptedTerms}
-              onChange={() => {
-                setAcceptedTerms(!acceptedTerms);
-                setTermsError('');
-              }}
-            />
-            Acepto los <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">términos y condiciones</a>
-          </label>
-          {termsError && <span className="error">{termsError}</span>}
+        <label>
+          <input type="checkbox" checked={acceptedTerms} onChange={() => {
+            setAcceptedTerms(!acceptedTerms);
+            setTermsError('');
+          }} />
+          Acepto los <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">términos y condiciones</a>
+        </label>
+        {termsError && <span className="error">{termsError}</span>}
       </div>
 
-      <button
-        className="confirm-button"
-        onClick={handleConfirmReservation}
-        disabled={persons.length === 0}
-      >
+      <button className="confirm-button" onClick={handleConfirmReservation} disabled={pendingPersons.length === 0}>
         Reservar
       </button>
 
