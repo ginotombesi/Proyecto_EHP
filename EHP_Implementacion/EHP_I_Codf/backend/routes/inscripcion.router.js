@@ -30,42 +30,42 @@ router.get('/', async (req, res) => {
 });
 
 // Obtener inscripción por DNI
-router.get('/:dni', async (req, res) => {
-    try {
-        const inscripcion = await inscripcionService.obtenerPorDni(req.params.dni);
-        if (!inscripcion) {
-            return res.status(404).json({ error: 'No encontrada' });
-        }
-        res.json(inscripcion);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
+// router.get('/:dni', async (req, res) => {
+//     try {
+//         const inscripcion = await inscripcionService.obtenerPorDni(req.params.dni);
+//         if (!inscripcion) {
+//             return res.status(404).json({ error: 'No encontrada' });
+//         }
+//         res.json(inscripcion);
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// });
 
 // Actualizar inscripción
-router.put('/:dni', async (req, res) => {
-    try {
-        const actualizada = await inscripcionService.actualizarInscripcion(req.params.dni, req.body);
-        if (!actualizada) {
-            return res.status(404).json({ error: 'No encontrada' });
-        }
-        res.json(actualizada);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
+// router.put('/:dni', async (req, res) => {
+//     try {
+//         const actualizada = await inscripcionService.actualizarInscripcion(req.params.dni, req.body);
+//         if (!actualizada) {
+//             return res.status(404).json({ error: 'No encontrada' });
+//         }
+//         res.json(actualizada);
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// });
 
 // Eliminar inscripción
-router.delete('/:dni', async (req, res) => {
-    try {
-        const eliminado = await inscripcionService.eliminarInscripcion(req.params.dni);
-        if (!eliminado) {
-            return res.status(404).json({ error: 'No encontrada' });
-        }
-        res.json({ mensaje: 'Inscripción eliminada' });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
+// router.delete('/:dni', async (req, res) => {
+//     try {
+//         const eliminado = await inscripcionService.eliminarInscripcion(req.params.dni);
+//         if (!eliminado) {
+//             return res.status(404).json({ error: 'No encontrada' });
+//         }
+//         res.json({ mensaje: 'Inscripción eliminada' });
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// });
 
 module.exports = router;

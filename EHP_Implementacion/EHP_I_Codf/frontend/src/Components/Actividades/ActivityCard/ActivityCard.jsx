@@ -59,7 +59,7 @@ const ActivityCard = ({ activity, isPast }) => {
         <button 
           className="reserve-button" 
           onClick={handleReserve}
-          disabled={activity.estaActiva === 0 || isPast}>
+          disabled={activity.estaActiva === 0 || isPast || activity.availableSpots === 0}>
           Reservar
         </button>
       </div>
