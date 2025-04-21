@@ -4,40 +4,34 @@ const { Actividad } = require('./actividadModel');
 
 const Inscripcion = sequelize.define('INSCRIPCION', {
     dni: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-    nombre: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-    },
-    edad: {
-        type: DataTypes.INTEGER,
-        allowNull: false
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true, // ✅ parte de la PK compuesta
     },
     actividad: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Actividad,
-            key: "idActividad"
-        },
-        allowNull: false
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true, // ✅ parte de la PK compuesta
+      references: {
+        model: Actividad,
+        key: "idActividad"
+      }
+    },
+    nombre: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    edad: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     talle: {
-        type: DataTypes.TEXT
+      type: DataTypes.TEXT
     }
-}, {
+  }, {
     tableName: 'INSCRIPCION',
     timestamps: false,
-    freezeTableName: true,
+    freezeTableName: true
+  });
 
-    // 👇 Clave única compuesta
-    indexes: [
-        {
-            unique: true,
-            fields: ['dni', 'actividad']
-        }
-    ]
-});
-
-module.exports = Inscripcion;
+module.exports = Inscripcion
