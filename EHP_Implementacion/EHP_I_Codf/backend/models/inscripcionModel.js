@@ -6,7 +6,6 @@ const Inscripcion = sequelize.define('INSCRIPCION', {
     dni: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true,
     },
     nombre: {
         type: DataTypes.TEXT,
@@ -28,9 +27,17 @@ const Inscripcion = sequelize.define('INSCRIPCION', {
         type: DataTypes.TEXT
     }
 }, {
-    tableName: 'INSCRIPCION',         // 👈 esto va como segundo parámetro
+    tableName: 'INSCRIPCION',
     timestamps: false,
-    freezeTableName: true
+    freezeTableName: true,
+
+    // 👇 Clave única compuesta
+    indexes: [
+        {
+            unique: true,
+            fields: ['dni', 'actividad']
+        }
+    ]
 });
 
 module.exports = Inscripcion;

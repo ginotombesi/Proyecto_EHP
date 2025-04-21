@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ActivityCard.css';
-
 const ActivityCard = ({ activity, isPast }) => {
+  
   const [showDescription, setShowDescription] = useState(false);
   const navigate = useNavigate();
 
   const handleReserve = () => {
-    navigate('/reserve', { state: { activity } });
+    navigate(`/reserve/${activity.id}`);
+
   };
 
   const toggleDescription = () => {

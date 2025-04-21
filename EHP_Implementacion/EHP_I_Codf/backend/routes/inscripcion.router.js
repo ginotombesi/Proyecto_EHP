@@ -3,14 +3,21 @@ const router = express.Router();
 const inscripcionService = require('../services/inscripcion.service.js');
 
 // Crear inscripción
-router.post('/', async (req, res) => {
+router.post('/:id', async (req, res) => {
     try {
-        const nueva = await inscripcionService.crearInscripcion(req.body);
-        res.status(201).json(nueva);
+      const datos = {
+        ...req.body,
+        actividad: parseInt(req.params.id) // 👈 asegurate de asignar el ID correctamente
+      };
+  
+      const nueva = await inscripcionService.crearInscripcion(datos);
+      res.status(201).json(nueva);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+      console.error('❌ Error creando inscripción:', error);
+      res.status(500).json({ error: error.message });
     }
-});
+  });
+  
 
 // Obtener todas las inscripciones
 router.get('/', async (req, res) => {

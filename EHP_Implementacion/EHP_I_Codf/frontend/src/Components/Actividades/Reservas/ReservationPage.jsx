@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './ReservationPage.css';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams} from "react-router-dom";
 import Swal from 'sweetalert2';
-
+import axios from 'axios';
 const talles = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
-
+import { crearInscripcion } from '../../../api';
 const ReservationPage = () => {
+  const {idActividad} = useParams();
+  const [actividad, setActividad] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const activity = location.state?.activity;
-  const requiereVest = activity?.necesitaTalle === 1;
-  console.log(activity)
+  const activity = actividad;
+const requiereVest = activity?.necesitaTalle === 1;
+  useEffect(() => {
+    axios.get(`http://localhost:3000/actividad/${idActividad}`)
+        .then(res => setActividad(res.data))
+        .catch(err => console.error(err));
+}, [idActividad]);
+
+
+
   const [formData, setFormData] = useState({
     fullName: '',
     dni: '',
@@ -21,9 +30,8 @@ const ReservationPage = () => {
   const [persons, setPersons] = useState([]);
   const [errors, setErrors] = useState({});
 
-  if (!activity) {
-    navigate('/activities');
-    return null;
+  if (!actividad) {
+    return <p>Cargando Inscripcion a la actividad...</p>;
   }
 
   const handleChange = (e) => {
@@ -52,7 +60,7 @@ const ReservationPage = () => {
       newErrors.age = 'Este campo es obligatorio';
     } else {
       const ageValue = parseInt(formData.age, 10);
-      const actividadId = activity?.idActividad;
+      const actividadId = actividad?.tipoActividadId;
   
       if (isNaN(ageValue)) {
         newErrors.age = 'La edad debe ser un número válido';
@@ -88,9 +96,9 @@ const ReservationPage = () => {
   };
   
   const getEdadAdvertencia = () => {
-    const actividadId = activity?.idTipoActividad
+    const actividadId = actividad?.tipoActividadId
   ;
-    console.log(actividadId)
+    
     if (actividadId === 2 || actividadId === 4) {
       return 'Edad permitida: de 10 a 80 años (actividad de alto riesgo)';
     } else if (actividadId === 1 || actividadId === 3) {
@@ -103,7 +111,7 @@ const ReservationPage = () => {
   
 
   const addPerson = () => {
-    if (persons.length >= activity.availableSpots) {
+    if (persons.length >= actividad.availableSpots) {
       Swal.fire({
         icon: 'info',
         title: '¡Sin cupos!',
@@ -136,33 +144,39 @@ const ReservationPage = () => {
   };
 
   const handleConfirmReservation = () => {
-    Swal.fire({
-      title: '¿Confirmar reserva?',
-      text: `Estás por reservar ${persons.length} lugar(es) para "${activity.name}".`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Confirmar',
-      cancelButtonText: 'Cancelar',
-      reverseButtons: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#aaa',
-    }).then((result) => {
-      if (result.isConfirmed) {
+    Promise.all(persons.map(persona =>
+      crearInscripcion({
+        dni: persona.dni,
+        nombre: persona.fullName,
+        edad: persona.age,
+        actividad: actividad.idActividad,
+        talle: persona.talles || null,
+         // por si lo usás dentro del modelo
+      }, actividad.idActividad)
+    ))
+      .then(() => {
         Swal.fire({
           title: '¡Reserva confirmada!',
           icon: 'success',
           confirmButtonText: 'OK',
         }).then(() => navigate('/activities'));
-      }
-    });
+      })
+      .catch((err) => {
+        console.error('Error al crear inscripciones:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo completar la reserva. Intenta nuevamente.',
+        });
+      });
   };
 
-  const isFull = persons.length >= activity.availableSpots;
-
+  const isFull = persons.length >= actividad.cupo;
+  
   return (
     <div className="reservation-page">
-      <h2>Reservar para: {activity.name}</h2>
-      <p>Cupos disponibles: {activity.availableSpots - persons.length}</p>
+      <h2>Reservar para: {actividad.nombre}</h2> 
+      <p>Cupos disponibles: {actividad.cupo - persons.length}</p>
 
       <div className="person-form-wrapper">
         <label>Nombre Completo</label>
@@ -202,7 +216,7 @@ const ReservationPage = () => {
 
         {requiereVest && (
           <>
-            <label>{activity.idTipoActividad === 3 ? 'Talla de Conjunto' : 'Talla de Arnés'}</label>
+            <label>{actividad.idTipoActividad === 3 ? 'Talla de Conjunto' : 'Talla de Arnés'}</label>
             <select
               name="talles"
               value={formData.talles}

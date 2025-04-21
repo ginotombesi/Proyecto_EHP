@@ -16,6 +16,22 @@ actividadRouter.get("/", async (req, res) => {
             .json({error: "Database error obteniendo actividades"});
     }
 })
+actividadRouter.get("/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const actividad = await actividadesService.obtenerActividadPorId(id);
+        if (!actividad) {
+            return res.status(404).json({ error: "Actividad no encontrada" });
+        }
+        res.json(actividad);
+    } catch (error) {
+        console.log(error);
+        res
+            .status(500)
+            .json({ error: "Database error obteniendo actividad por ID" });
+    }
+});
+
 
 module.exports = actividadRouter;
 
