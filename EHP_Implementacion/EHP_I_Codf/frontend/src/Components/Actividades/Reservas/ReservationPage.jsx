@@ -11,7 +11,12 @@ const ReservationPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const activity = actividad;
-const requiereVest = activity?.necesitaTalle === 1;
+  const requiereVest = activity?.necesitaTalle === 1;
+
+   //aceptacion terminos y condiciones
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [termsError, setTermsError] = useState('');
+ 
   useEffect(() => {
     axios.get(`http://localhost:3000/actividad/${idActividad}`)
         .then(res => setActividad(res.data))
@@ -31,11 +36,8 @@ const requiereVest = activity?.necesitaTalle === 1;
   const [errors, setErrors] = useState({});
 
   if (!actividad) {
-    return <p>Cargando Inscripcion a la actividad...</p>;
-  //aceptacion terminos y condiciones
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const [termsError, setTermsError] = useState('');
-
+    return <p>Cargando Inscripcion a la actividad...</p>;}
+ 
   if (!activity) {
     navigate('/activities');
     return null;
@@ -151,6 +153,12 @@ const requiereVest = activity?.necesitaTalle === 1;
   };
 
   const handleConfirmReservation = () => {
+
+    if (!acceptedTerms) {
+      setTermsError('Debe aceptar los términos y condiciones para continuar.');
+      return;
+    }
+
     Promise.all(persons.map(persona =>
       crearInscripcion({
         dni: persona.dni,
@@ -283,5 +291,5 @@ const requiereVest = activity?.necesitaTalle === 1;
     </div>
   );
 };
-}
+
 export default ReservationPage;
