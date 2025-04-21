@@ -32,6 +32,13 @@ const requiereVest = activity?.necesitaTalle === 1;
 
   if (!actividad) {
     return <p>Cargando Inscripcion a la actividad...</p>;
+  //aceptacion terminos y condiciones
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [termsError, setTermsError] = useState('');
+
+  if (!activity) {
+    navigate('/activities');
+    return null;
   }
 
   const handleChange = (e) => {
@@ -249,6 +256,21 @@ const requiereVest = activity?.necesitaTalle === 1;
         ))}
       </div>
 
+      <div className="terms-container">
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptedTerms}
+              onChange={() => {
+                setAcceptedTerms(!acceptedTerms);
+                setTermsError('');
+              }}
+            />
+            Acepto los <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">términos y condiciones</a>
+          </label>
+          {termsError && <span className="error">{termsError}</span>}
+      </div>
+
       <button
         className="confirm-button"
         onClick={handleConfirmReservation}
@@ -261,5 +283,5 @@ const requiereVest = activity?.necesitaTalle === 1;
     </div>
   );
 };
-
+}
 export default ReservationPage;
