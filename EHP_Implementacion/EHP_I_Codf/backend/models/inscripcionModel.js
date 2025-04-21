@@ -12,8 +12,8 @@ const Inscripcion = sequelize.define('INSCRIPCION', {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    fechaNacimiento: {
-        type: DataTypes.TEXT,
+    edad: {
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     actividad: {
