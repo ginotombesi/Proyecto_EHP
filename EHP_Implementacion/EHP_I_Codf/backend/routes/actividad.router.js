@@ -1,8 +1,9 @@
-const appExpress = require("express");
+const express = require("express");
 const actividadesService = require("../services/actividad.service.js")
 
-const actividadRouter = appExpress.Router();
+const actividadRouter = express.Router();
 
+// Obtener todas las actividades
 actividadRouter.get("/", async (req, res) => {
     try{
         let actividades = null;
@@ -16,6 +17,8 @@ actividadRouter.get("/", async (req, res) => {
             .json({error: "Database error obteniendo actividades"});
     }
 })
+
+// Obtener actividad por ID
 actividadRouter.get("/:id", async (req, res) => {
     try {
         const id = req.params.id;
