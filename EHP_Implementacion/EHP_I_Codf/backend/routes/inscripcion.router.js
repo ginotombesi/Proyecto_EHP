@@ -7,7 +7,7 @@ inscripcionRouter.post('/:id', async (req, res) => {
     try {
       const datos = {
         ...req.body,
-        actividad: parseInt(req.params.id) // 👈 asegurate de asignar el ID correctamente
+        actividad: parseInt(req.params.id) 
       };
   
       const nueva = await inscripcionService.crearInscripcion(datos);
