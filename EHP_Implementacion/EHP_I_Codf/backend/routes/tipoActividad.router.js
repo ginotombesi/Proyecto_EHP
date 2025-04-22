@@ -1,10 +1,10 @@
 const express = require('express');
 const tipoActividadService = require('../services/tipoActividad.service.js');
 
-const router = express.Router();
+const tipoActividadRouter = express.Router();
 
 // Crear nuevo tipo de actividad
-router.post('/', async (req, res) => {
+tipoActividadRouter.post('/', async (req, res) => {
     try {
         const nuevo = await tipoActividadService.crearTipoActividad(req.body);
         res.status(201).json(nuevo);
@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
 });
 
 // Obtener todos los tipos de actividad
-router.get('/', async (req, res) => {
+tipoActividadRouter.get('/', async (req, res) => {
     try {
         const tipos = await tipoActividadService.obtenerTodos();
         res.json(tipos);
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 });
 
 // Obtener un tipo de actividad por ID
-router.get('/:idTipo', async (req, res) => {
+tipoActividadRouter.get('/:idTipo', async (req, res) => {
     try {
         const tipo = await tipoActividadService.obtenerPorId(req.params.idTipo);
         if (!tipo) {
@@ -37,7 +37,7 @@ router.get('/:idTipo', async (req, res) => {
 });
 
 // Actualizar un tipo de actividad
-router.put('/:idTipo', async (req, res) => {
+tipoActividadRouter.put('/:idTipo', async (req, res) => {
     try {
         const actualizado = await tipoActividadService.actualizarTipoActividad(req.params.idTipo, req.body);
         if (!actualizado) {
@@ -50,7 +50,7 @@ router.put('/:idTipo', async (req, res) => {
 });
 
 // Eliminar un tipo de actividad
-router.delete('/:idTipo', async (req, res) => {
+tipoActividadRouter.delete('/:idTipo', async (req, res) => {
     try {
         const eliminado = await tipoActividadService.eliminarTipoActividad(req.params.idTipo);
         if (!eliminado) {
@@ -62,4 +62,4 @@ router.delete('/:idTipo', async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = tipoActividadRouter;
