@@ -2,8 +2,26 @@ import React, { useState } from 'react';
 import './ReservationPage.css';
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+import { crearInscripcion } from '../../../api';
 
 const talles = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+
+const edadANacimiento = (edad) => {
+  const hoy = new Date();
+  const añoNacimiento = hoy.getFullYear() - edad;
+  const mes = hoy.getMonth(); // 0-indexed
+  const dia = hoy.getDate();
+
+  const fechaNacimiento = new Date(añoNacimiento, mes, dia);
+
+  const dd = String(fechaNacimiento.getDate()).padStart(2, '0');
+  const mm = String(fechaNacimiento.getMonth() + 1).padStart(2, '0'); // sumamos 1 porque enero = 0
+  const yyyy = fechaNacimiento.getFullYear();
+
+  return `${dd}/${mm}/${yyyy}`;
+};
+
+
 
 const ReservationPage = () => {
   const location = useLocation();
@@ -77,7 +95,7 @@ const ReservationPage = () => {
     navigate('/activities');
   };
 
-  const handleConfirmReservation = () => {
+  const handleConfirmReservation = async () => {
     Swal.fire({
       title: '¿Confirmar reserva?',
       text: `Estás por reservar ${persons.length} lugar(es) para "${activity.name}".`,
@@ -88,16 +106,36 @@ const ReservationPage = () => {
       reverseButtons: true,
       confirmButtonColor: '#d33',
       cancelButtonColor: '#aaa',
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: '¡Reserva confirmada!',
-          icon: 'success',
-          confirmButtonText: 'OK',
-        }).then(() => navigate('/activities'));
+        const inscripciones = persons.map((p) => ({
+          nombre: p.fullName,
+          dni: parseInt(p.dni),
+          fechaNac: edadANacimiento(parseInt(p.age)),
+          actividad: activity.id,
+          talle: p.talles || null,
+        }));
+  
+        try {
+          await crearInscripcion(inscripciones);
+          Swal.fire({
+            title: '¡Reserva confirmada!',
+            icon: 'success',
+            confirmButtonText: 'OK',
+          }).then(() => navigate('/activities'));
+        } catch (err) {
+          console.error(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un problema al guardar la inscripción.',
+          });
+        }
       }
     });
   };
+  
+  
 
   const isFull = persons.length >= activity.availableSpots;
 
