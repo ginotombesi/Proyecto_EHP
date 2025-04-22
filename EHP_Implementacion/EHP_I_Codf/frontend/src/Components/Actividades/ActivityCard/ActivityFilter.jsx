@@ -14,13 +14,17 @@ const ActivityFilter = ({ filters, onFilterChange, onClear }) => {
 
   return (
     <div className="filter-bar">
-      <input
-        type="text"
-        placeholder="Nombre (Safari, Palestra...)"
+      <select
         name="name"
         value={filters.name}
         onChange={onFilterChange}
-      />
+      >
+        <option value="">Todas las actividades</option>
+        <option value="Safari">Safari</option>
+        <option value="Palestra">Palestra</option>
+        <option value="Caminata">Caminata</option>
+        <option value="Visita guiada">Visita guiada</option>
+      </select>
       <input
         type="date"
         name="date"
