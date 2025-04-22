@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { crearInscripcion } from '../../../api';
-
+import termsMock from './termsMock.json';
 const talles = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
 
 const ReservationPage = () => {
@@ -12,6 +12,7 @@ const ReservationPage = () => {
   const [actividad, setActividad] = useState(null);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [termsError, setTermsError] = useState('');
+  const [showTermsModal, setShowTermsModal] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     dni: '',
@@ -21,6 +22,7 @@ const ReservationPage = () => {
   const [pendingPersons, setPendingPersons] = useState([]);
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
+  const [noPersonsError, setNoPersonsError] = useState('');
 
   const requiereVest = actividad?.tipoActividad?.requiereVest === 1;
   const descripcion = actividad?.tipoActividad?.descripcion;
@@ -87,6 +89,7 @@ const ReservationPage = () => {
   };
 
   const addPerson = () => {
+    if (noPersonsError) setNoPersonsError('');
     if (pendingPersons.length >= actividad.cupo) {
       Swal.fire({
         icon: 'info',
@@ -113,11 +116,16 @@ const ReservationPage = () => {
   const onBack = () => navigate('/activities');
 
   const handleConfirmReservation = () => {
+    if (pendingPersons.length === 0) {
+      setNoPersonsError('Debe cargar al menos una persona para poder reservar.');
+      return;
+    }
+    
     if (!acceptedTerms) {
       setTermsError('Debe aceptar los términos y condiciones para continuar.');
       return;
     }
-  
+    setNoPersonsError(''); // limpiamos si todo ok
     Promise.allSettled(
       pendingPersons.map(persona =>
         crearInscripcion({
@@ -180,29 +188,44 @@ const ReservationPage = () => {
       });
     });
   };
-  
-  
 
+  const normalizarDescripcion = (descripcion) => {
+    return descripcion
+      ?.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '');
+  };
+  
+  const tipo = normalizarDescripcion(actividad?.tipoActividad?.descripcion);
+  const info = termsMock[tipo] || {
+    title: 'Términos y condiciones no disponibles para esta actividad.',
+    content: ''
+  };
+;
+  
+  
+ 
   const isFull = pendingPersons.length >= actividad.cupo;
 
   return (
     <div className="reservation-page">
       <h2>Reservar para: {descripcion}</h2>
       <p>Cupos disponibles: {actividad.cupo - pendingPersons.length}</p>
-
+  
       <div className="person-form-wrapper">
         <label>Nombre Completo</label>
         <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} disabled={isFull} />
         {errors.fullName && <span className="error">{errors.fullName}</span>}
-
+  
         <label>DNI</label>
         <input type="text" name="dni" value={formData.dni} onChange={handleChange} disabled={isFull} />
         {errors.dni && <span className="error">{errors.dni}</span>}
-
+  
         <label>Edad <span className="edad-advertencia">– {getEdadAdvertencia()}</span></label>
         <input type="number" name="age" value={formData.age} onChange={handleChange} disabled={isFull} />
         {errors.age && <span className="error">{errors.age}</span>}
-
+  
         {requiereVest && (
           <>
             <label>{actividad.tipoActividadId === 3 ? 'Talla de Conjunto' : 'Talla de Arnés'}</label>
@@ -215,10 +238,10 @@ const ReservationPage = () => {
             {errors.talles && <span className="error">{errors.talles}</span>}
           </>
         )}
-
+  
         {!isFull && <button onClick={addPerson}>+ Agregar Persona</button>}
       </div>
-
+  
       <div className="person-cards-container">
         {pendingPersons.map((person, index) => (
           <div key={index} className="person-card">
@@ -230,25 +253,63 @@ const ReservationPage = () => {
           </div>
         ))}
       </div>
-
+  
       <div className="terms-container">
-        <label>
-          <input type="checkbox" checked={acceptedTerms} onChange={() => {
-            setAcceptedTerms(!acceptedTerms);
-            setTermsError('');
-          }} />
-          Acepto los <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">términos y condiciones</a>
-        </label>
-        {termsError && <span className="error">{termsError}</span>}
-      </div>
+  <div className="terms-checkbox-row">
+    <input
+      type="checkbox"
+      id="termsCheckbox"
+      checked={acceptedTerms}
+      onChange={() => {
+        setAcceptedTerms(!acceptedTerms);
+        setTermsError('');
+      }}
+    />
+    <label htmlFor="termsCheckbox">Acepto los</label>
+    <span
+      onClick={() => setShowTermsModal(true)}
+      className="terms-link"
+    >
+      términos y condiciones
+    </span>
+  </div>
 
-      <button className="confirm-button" onClick={handleConfirmReservation} disabled={pendingPersons.length === 0}>
+  {termsError && <span className="error">{termsError}</span>}
+</div>
+  
+      {noPersonsError && <p className="error">{noPersonsError}</p>}
+
+      <button
+        className="confirm-button"
+        onClick={handleConfirmReservation}
+        disabled={pendingPersons.length === 0}
+      >
         Reservar
       </button>
 
+  
       <button onClick={onBack}>← Volver</button>
+  
+      {/* Modal de Términos y Condiciones */}
+      {showTermsModal && (
+  <div className="modal-overlay">
+    <div className="modal-content">
+      <h3>{info.title}</h3>
+      <div className="modal-body">
+        {info.content.split('\n').map((line, index) => (
+          <p key={index}>{line}</p>
+        ))}
+      </div>
+      <button className="modal-close" onClick={() => setShowTermsModal(false)}>✕</button>
+    </div>
+  </div>
+)}
+
+
+
     </div>
   );
+  
 };
 
 export default ReservationPage;
