@@ -1,7 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../persistence/db');
-const { Actividad } = require('./actividadModel');
+const Actividad = require('./actividadModel');
 
+// Definición del modelo para la tabla INSCRIPCION
 const Inscripcion = sequelize.define('INSCRIPCION', {
     dni: {
       type: DataTypes.INTEGER,
