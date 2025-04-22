@@ -28,7 +28,7 @@ const crearInscripcion = async (datos) => {
 
   // Paso 3: Crear la inscripción
   const nuevaInscripcion = await Inscripcion.create(datos);
-
+/*
   // Paso 4: Descontar 1 del cupo
   act.cupo -= 1;
 
@@ -39,6 +39,14 @@ const crearInscripcion = async (datos) => {
 
   await act.save();
 
+  */
+
+  await act.decrement('cupo', { by: 1 });
+  const actualizado = await Actividad.findByPk(actividad);
+  if (actualizado.cupo === 0) {
+  actualizado.activa = 0;    // o 0, según tu modelo
+  await actualizado.save();
+  }
   return nuevaInscripcion;
 };
 
