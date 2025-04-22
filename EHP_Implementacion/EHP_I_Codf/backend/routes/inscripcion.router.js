@@ -1,32 +1,32 @@
 const express = require('express');
+
 const inscripcionRouter = express.Router();
 const inscripcionService = require('../services/inscripcion.service.js');
 
 // Crear inscripción
 inscripcionRouter.post('/:id', async (req, res) => {
-    try {
-      const datos = {
-        ...req.body,
-        actividad: parseInt(req.params.id) 
-      };
-  
-      const nueva = await inscripcionService.crearInscripcion(datos);
-      res.status(201).json(nueva);
-    } catch (error) {
-      console.error('❌ Error creando inscripción:', error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-  
+  try {
+    const datos = {
+      ...req.body,
+      actividad: parseInt(req.params.id),
+    };
+
+    const nueva = await inscripcionService.crearInscripcion(datos);
+    res.status(201).json(nueva);
+  } catch (error) {
+    console.error('❌ Error creando inscripción:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Obtener todas las inscripciones
 inscripcionRouter.get('/', async (req, res) => {
-    try {
-        const inscripciones = await inscripcionService.obtenerTodas();
-        res.json(inscripciones);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+  try {
+    const inscripciones = await inscripcionService.obtenerTodas();
+    res.json(inscripciones);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Obtener inscripción por DNI
