@@ -6,12 +6,16 @@ const tipoActividadRouter = express.Router();
 // Crear nuevo tipo de actividad
 tipoActividadRouter.post('/', async (req, res) => {
     try {
-        const nuevo = await tipoActividadService.crearTipoActividad(req.body);
-        res.status(201).json(nuevo);
+        console.log("LLEGÓ:", req.body); // <--- log importantísimo
+
+        const nueva = await inscripcionService.crearInscripcion(req.body);
+        res.status(201).json(nueva);
     } catch (error) {
+        console.error("ERROR AL CREAR INSCRIPCIÓN:", error); // 👈 esto te da la pista real
         res.status(500).json({ error: error.message });
     }
 });
+
 
 // Obtener todos los tipos de actividad
 tipoActividadRouter.get('/', async (req, res) => {
