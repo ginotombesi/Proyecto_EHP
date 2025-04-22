@@ -223,17 +223,21 @@
 }
 
 .filter-bar input,
-.filter-bar button {
+.filter-bar button,
+.filter-bar select {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
 
-.filter-bar input:focus {
+.filter-bar input:focus,
+.filter-bar select:focus {
   border-color: #00bcd4;
   outline: none;
 }
+
+
 
 .filter-bar button {
   background-color: #ff5a5f;
