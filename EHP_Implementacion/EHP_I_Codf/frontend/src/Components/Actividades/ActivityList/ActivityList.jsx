@@ -14,6 +14,7 @@ const ActivityList = () => {
       try {
         const response = await obtenerActividades();
         const data = response.data.map((actividad) => ({
+          id : actividad.idActividad,
           name: actividad.tipoActividad.descripcion || "No tiene Nombre",
           time: actividad.horaInicio || '00:00',
           endTime: actividad.horaFin || '00:00',
@@ -69,25 +70,34 @@ const ActivityList = () => {
 
   const separateByTime = (list) => {
     const now = new Date();
+    now.setSeconds(0);
+    now.setMilliseconds(0);
+  
     const future = [], past = [];
-
+    
     list.forEach((act) => {
       const dt = formatDateTime(act.date, act.time);
-      if (dt > now) {
+      dt.setSeconds(0);
+      dt.setMilliseconds(0);
+  
+      if (dt.getTime() >= now.getTime()) {
         future.push({ ...act, dt });
+        console.log('AHORA:', now);
+    console.log('ACTIVIDAD:', dt, act.name);
       } else {
         past.push({ ...act, dt });
       }
     });
-
+    
+  
     const sortByTime = (a, b) => a.dt - b.dt;
-
+  
     return {
       future: future.sort(sortByTime).map(({ dt, ...rest }) => rest),
       past: past.sort(sortByTime).map(({ dt, ...rest }) => rest),
     };
   };
-
+  
   const filtered = filterActivities(activities);
   const { future, past } = separateByTime(filtered);
 
@@ -107,7 +117,7 @@ const ActivityList = () => {
       ) : (
         <>
           {future.map((activity, index) => (
-            <ActivityCard key={`fut-${index}`} activity={activity} />
+            <ActivityCard key={`fut-${index}`} activity={activity} isPast={false} />
           ))}
 
           {past.length > 0 && (
@@ -115,7 +125,7 @@ const ActivityList = () => {
               <hr style={{ margin: '2rem 0', borderColor: '#aaa', width: '80%' }} />
               <h3 style={{ color: 'white', textAlign: 'center' }}>Actividades Pasadas</h3>
               {past.map((activity, index) => (
-                <ActivityCard key={`past-${index}`} activity={activity} />
+                <ActivityCard key={`past-${index}`} activity={activity} isPast={true} />
               ))}
             </>
           )}

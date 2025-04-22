@@ -1,24 +1,22 @@
-// src/components/ActivityCard.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ActivityCard.css';
-
-const ActivityCard = ({ activity }) => {
+const ActivityCard = ({ activity, isPast }) => {
+  
   const [showDescription, setShowDescription] = useState(false);
   const navigate = useNavigate();
- 
 
   const handleReserve = () => {
-    navigate('/reserve', { state: { activity } });
+    navigate(`/reserve/${activity.id}`);
+
   };
 
   const toggleDescription = () => {
     setShowDescription((prev) => !prev);
   };
-//imagenes//
-// Determinar la clase de la imagen según el tipo de actividad
-  const getActivityImageClass = (typeId) => {
 
+  // Determinar la clase de la imagen según el tipo de actividad
+  const getActivityImageClass = (typeId) => {
     switch (typeId) {
       case 1:
         return 'Safari';
@@ -35,13 +33,10 @@ const ActivityCard = ({ activity }) => {
 
   const imageClass = getActivityImageClass(activity.idTipoActividad);
 
-  const desactiva = activity.estaActiva === 0 ? 'actividad-inactiva' : '';
   return (
     <div className={`activity-card ${imageClass}`}>
       <div className="activity-header">
-      <h3 className={desactiva}>
-            {activity.name}
-      </h3>
+        <h3>{activity.name}</h3>
         <button className="toggle-description" onClick={toggleDescription}>
           {showDescription ? '▲ Ocultar' : '▼ Ver más'}
         </button>
@@ -62,9 +57,9 @@ const ActivityCard = ({ activity }) => {
 
       <div className="activity-footer">
         <button 
-        className="reserve-button" 
-        onClick={handleReserve}
-        disabled={activity.estaActiva === 0}>
+          className="reserve-button" 
+          onClick={handleReserve}
+          disabled={activity.estaActiva === 0 || isPast || activity.availableSpots === 0}>
           Reservar
         </button>
       </div>
@@ -73,7 +68,5 @@ const ActivityCard = ({ activity }) => {
 };
 
 export default ActivityCard;
-
-
 
 
