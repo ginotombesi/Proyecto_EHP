@@ -31,6 +31,7 @@ const eliminarTipoActividad = async (idTipo) => {
     return true;
 };
 
+// Exportamos los services
 module.exports =  {
     crearTipoActividad,
     obtenerTodos,

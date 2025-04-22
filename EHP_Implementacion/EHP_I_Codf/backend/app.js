@@ -9,7 +9,7 @@ const cors = require('cors');
 
 app.get('/', (req, res) => {
   res.send('Servidor Funcionando');
-});
+}); // pagina raiz
 
 app.use(express.json());
 
