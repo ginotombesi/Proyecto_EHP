@@ -34,7 +34,7 @@ const crearInscripcion = async (datos) => {
   if (act.cupo === 0) {
     act.activa = 0;  // o `false`, según cómo lo tengas definido en el modelo
   }
-
+  
   await act.save();
 
   return nuevaInscripcion;
