@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../persistence/db.js");
 
+// Definición del modelo para la tabla TIPOACTIVIDAD
 const TipoActividad = sequelize.define("TIPOACTIVIDAD", {
 
     idTipo: {

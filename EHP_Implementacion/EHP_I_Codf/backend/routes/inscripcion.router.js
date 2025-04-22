@@ -1,9 +1,9 @@
 const express = require('express');
-const router = express.Router();
+const inscripcionRouter = express.Router();
 const inscripcionService = require('../services/inscripcion.service.js');
 
 // Crear inscripción
-router.post('/:id', async (req, res) => {
+inscripcionRouter.post('/:id', async (req, res) => {
     try {
       const datos = {
         ...req.body,
@@ -20,7 +20,7 @@ router.post('/:id', async (req, res) => {
   
 
 // Obtener todas las inscripciones
-router.get('/', async (req, res) => {
+inscripcionRouter.get('/', async (req, res) => {
     try {
         const inscripciones = await inscripcionService.obtenerTodas();
         res.json(inscripciones);
@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
 });
 
 // Obtener inscripción por DNI
-// router.get('/:dni', async (req, res) => {
+// inscripcionRouter.get('/:dni', async (req, res) => {
 //     try {
 //         const inscripcion = await inscripcionService.obtenerPorDni(req.params.dni);
 //         if (!inscripcion) {
@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
 // });
 
 // Actualizar inscripción
-// router.put('/:dni', async (req, res) => {
+// inscripcionRouter.put('/:dni', async (req, res) => {
 //     try {
 //         const actualizada = await inscripcionService.actualizarInscripcion(req.params.dni, req.body);
 //         if (!actualizada) {
@@ -56,7 +56,7 @@ router.get('/', async (req, res) => {
 // });
 
 // Eliminar inscripción
-// router.delete('/:dni', async (req, res) => {
+// inscripcionRouter.delete('/:dni', async (req, res) => {
 //     try {
 //         const eliminado = await inscripcionService.eliminarInscripcion(req.params.dni);
 //         if (!eliminado) {
@@ -68,4 +68,4 @@ router.get('/', async (req, res) => {
 //     }
 // });
 
-module.exports = router;
+module.exports = inscripcionRouter;
