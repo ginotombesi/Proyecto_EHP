@@ -22,8 +22,8 @@ const ActivityFilter = ({ filters, onFilterChange, onClear }) => {
         <option value="">Todas las actividades</option>
         <option value="Safari">Safari</option>
         <option value="Palestra">Palestra</option>
-        <option value="Caminata">Caminata</option>
-        <option value="Visita guiada">Visita guiada</option>
+        <option value="Tirolesa">Tirolesa</option>
+        <option value="Jardineria">Jardineria</option>
       </select>
       <input
         type="date"
