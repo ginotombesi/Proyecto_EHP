@@ -1,5 +1,7 @@
 const sequelize = require("./db.js") ;
 
+// Sincroniza los modelos con la base de datos SQLite
+
 async function dbInit() {
     try {
         await sequelize.authenticate();
@@ -12,6 +14,6 @@ async function dbInit() {
     }
 }
 
-dbInit()
+
 
 module.exports = dbInit;
