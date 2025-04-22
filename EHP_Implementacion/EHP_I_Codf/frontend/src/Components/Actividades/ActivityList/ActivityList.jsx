@@ -14,7 +14,7 @@ const ActivityList = () => {
       try {
         const response = await obtenerActividades();
         const data = response.data.map((actividad) => ({
-          id : actividad.idActividad,
+          id: actividad.idActividad,
           name: actividad.tipoActividad.descripcion || "No tiene Nombre",
           time: actividad.horaInicio || '00:00',
           endTime: actividad.horaFin || '00:00',
@@ -72,32 +72,38 @@ const ActivityList = () => {
     const now = new Date();
     now.setSeconds(0);
     now.setMilliseconds(0);
-  
+
     const future = [], past = [];
-    
+
     list.forEach((act) => {
       const dt = formatDateTime(act.date, act.time);
       dt.setSeconds(0);
       dt.setMilliseconds(0);
-  
+
       if (dt.getTime() >= now.getTime()) {
         future.push({ ...act, dt });
-        console.log('AHORA:', now);
-    console.log('ACTIVIDAD:', dt, act.name);
       } else {
         past.push({ ...act, dt });
       }
     });
-    
-  
-    const sortByTime = (a, b) => a.dt - b.dt;
-  
+
+    const sortByPriority = (a, b) => {
+      const aHasSpots = a.availableSpots > 0;
+      const bHasSpots = b.availableSpots > 0;
+
+      if (aHasSpots && !bHasSpots) return -1;
+      if (!aHasSpots && bHasSpots) return 1;
+
+      // Si ambos tienen (o no tienen) cupos, ordenar por fecha/hora
+      return a.dt - b.dt;
+    };
+
     return {
-      future: future.sort(sortByTime).map(({ dt, ...rest }) => rest),
-      past: past.sort(sortByTime).map(({ dt, ...rest }) => rest),
+      future: future.sort(sortByPriority).map(({ dt, ...rest }) => rest),
+      past: past.sort((a, b) => a.dt - b.dt).map(({ dt, ...rest }) => rest),
     };
   };
-  
+
   const filtered = filterActivities(activities);
   const { future, past } = separateByTime(filtered);
 
