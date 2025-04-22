@@ -182,9 +182,8 @@ const ReservationPage = () => {
         confirmButtonText: 'Aceptar'
       }).then(() => {
         setErrors({});
-        if (errores.length === 0) {
           navigate('/activities');
-        }
+        
       });
     });
   };
