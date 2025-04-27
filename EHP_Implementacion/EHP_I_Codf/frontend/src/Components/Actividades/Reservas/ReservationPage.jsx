@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './ReservationPage.css';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { crearInscripcion } from '../../../api';
 import termsMock from './termsMock.json';
+import sendConfirmationEmail from './SendConfirmationEmail';
 const talles = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
 
 const ReservationPage = () => {
@@ -17,7 +18,8 @@ const ReservationPage = () => {
     fullName: '',
     dni: '',
     age: '',
-    talles: ''
+    talles: '',
+    email:  ''
   });
   const [pendingPersons, setPendingPersons] = useState([]);
   const [errors, setErrors] = useState([]);
@@ -77,6 +79,12 @@ const ReservationPage = () => {
     if (requiereVest && !formData.talles.trim()) {
       newErrors.talles = 'Este campo es obligatorio';
     }
+    if (!formData.email.trim()) {
+      newErrors.email = 'Este campo es obligatorio';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Ingrese un correo válido';
+    }
+    
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -103,7 +111,8 @@ const ReservationPage = () => {
     if (!validateForm()) return;
 
     setPendingPersons([...pendingPersons, formData]);
-    setFormData({ fullName: '', dni: '', age: '', talles: '' });
+    setFormData({ fullName: '', dni: '', age: '', talles: '', email: formData.email });
+
     setErrors({});
   };
 
@@ -120,12 +129,14 @@ const ReservationPage = () => {
       setNoPersonsError('Debe cargar al menos una persona para poder reservar.');
       return;
     }
-    
+  
     if (!acceptedTerms) {
       setTermsError('Debe aceptar los términos y condiciones para continuar.');
       return;
     }
+  
     setNoPersonsError(''); // limpiamos si todo ok
+  
     Promise.allSettled(
       pendingPersons.map(persona =>
         crearInscripcion({
@@ -152,6 +163,11 @@ const ReservationPage = () => {
           });
         }
       });
+  
+      // Enviar solo un correo si hay inscripciones exitosas
+      if (exitosas.length > 0) {
+        sendConfirmationEmail(formData.email, exitosas, actividad);
+      }
   
       // Actualizar estado: dejamos solo los que fallaron, en caso de querer reintentar
       const pendientesRestantes = pendingPersons.filter(p =>
@@ -182,12 +198,11 @@ const ReservationPage = () => {
         confirmButtonText: 'Aceptar'
       }).then(() => {
         setErrors({});
-          navigate('/activities');
-        
+        navigate('/activities');
       });
     });
   };
-
+  
   const normalizarDescripcion = (descripcion) => {
     return descripcion
       ?.toLowerCase()
@@ -224,7 +239,10 @@ const ReservationPage = () => {
         <label>Edad <span className="edad-advertencia">– {getEdadAdvertencia()}</span></label>
         <input type="number" name="age" value={formData.age} onChange={handleChange} disabled={isFull} />
         {errors.age && <span className="error">{errors.age}</span>}
-  
+        <label>Email</label>
+        <input type="email" name="email" value={formData.email} onChange={handleChange} disabled={isFull} />
+        {errors.email && <span className="error">{errors.email}</span>}
+
         {requiereVest && (
           <>
             <label>{actividad.tipoActividadId === 3 ? 'Talla de Conjunto' : 'Talla de Arnés'}</label>
