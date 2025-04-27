@@ -1,5 +1,6 @@
 import emailjs from '@emailjs/browser';
 //import generateQRCode from './GenerateQRCode'; // recuerda crearlo
+const logo = "https://i.postimg.cc/bY6zPc0Q/ecoharmony.png";
 
 const sendConfirmationEmail = async (email, pendingPersons, actividadCompleta) => {
   const serviceID = 'service_4vakvbd';      // Tu Service ID real
@@ -25,6 +26,7 @@ ${pendingPersons.map(p => `- ${p.fullName} (DNI: ${p.dni})`).join('\n')}
   // Parámetros que se envían al template de EmailJS
   const templateParams = {
     direccion_envio:  'ecoharmonypark@gmail.com',
+    logo_empresa : logo,
     user_email: email,
     actividad_name: actividadCompleta.tipoActividad.descripcion,
     fecha: actividadCompleta.fecha,
