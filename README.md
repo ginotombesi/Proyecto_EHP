@@ -44,8 +44,6 @@
 |-------------------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------|----------------|
 | Base de datos                       | `EHP_I_BD.db`                                     | [Base de datos](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_BD)        | Implementación |
 | Código fuente                       | `EHP_I_CodF_<NombreComponente>.<extensión>`       | [Código Fuente](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_Codf)      | Implementación |
-| Librerías                           | `EHP_I_Lib_<NombreLibreria>.<extensión>`          | [Librerías](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_Lib)           | Implementación |
-| Manuales de usuario                 | `EHP_I_ManUs_<versión>.pdf`                       | [Manuales](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_ManUs)          | Documento      |
 | Casos de prueba                     | `EHP_CP<NroCP>_<descripcionCP>.<extension>`       | [Casos de prueba](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Pruebas)                      | Implementación |
 | Líneas base                         | `EHP_LINEA_BASE_<ITERxx>_<NOMBRE_LB>_<NN>.docx`   | [Líneas base](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Linea_Base)                       | Documento      |
 
