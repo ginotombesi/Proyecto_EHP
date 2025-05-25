@@ -1,7 +1,7 @@
-
-  ![Eco Harmony Park Logo](EHP_Implementacion/EHP_I_Codf/frontend/public/logo_EHP.png)
+![Eco Harmony Park Logo](EHP_Implementacion/EHP_I_Codf/frontend/public/logo_EHP.png)
 
 # Proyecto Eco Harmony Park (EHP)
+
 ## Información General
 
 **Cátedra:** Ingeniería y Calidad de Software  
@@ -72,4 +72,10 @@ La línea base se establecerá tras la revisión y aprobación por parte de las 
 
 ---
 
-**Última Actualización:** Lucas Martin Chas Diaz 24-05-2025
+## Historial de Actualizaciones
+
+| Fecha       | Autor                      | Descripción          |
+|-------------|----------------------------|----------------------|
+| 14-05-2025  | Lucas Martín Chas Díaz     | Actualización inicial |
+| 24-05-2025  | Lucas Martín Chas Díaz     | Revisión y mejoras de estructura README |
+
