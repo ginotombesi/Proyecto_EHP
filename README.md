@@ -1,4 +1,4 @@
-![Eco Harmony Park Logo](EHP_RecursosGraficos/Logo_EHP.png)
+![Eco Harmony Park Logo](EHP_Implementacion/EHP_I_Codf/frontend/src/Components/Actividades/Reservas/ecoHarmonyPark.png)
 
 # Proyecto Eco Harmony Park (EHP)
 
