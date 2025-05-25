@@ -22,7 +22,7 @@
 | Juan Ignacio Rottino      | 94543  |
 | Valentino Gabriel Rocca   | 94774  |
 | Gino Paolo Tombesi        | 95345  |
-| Lucca Medina              |        |
+| Lucca Medina              | 95644  |
 
 ## Repositorio del Proyecto
 [Repositorio GitHub](https://github.com/ginotombesi/Proyecto_EHP)
