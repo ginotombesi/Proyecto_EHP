@@ -1,7 +1,7 @@
-![Eco Harmony Park Logo](EHP_Implementacion/EHP_I_Codf/frontend/src/Components/Actividades/Reservas/ecoHarmonyPark.png)
+
 
 # Proyecto Eco Harmony Park (EHP)
-
+![Eco Harmony Park Logo](EHP_Implementacion/EHP_I_Codf/frontend/src/Components/Actividades/Reservas/ecoHarmonyPark.png)
 ## Información General
 
 **Cátedra:** Ingeniería y Calidad de Software  
