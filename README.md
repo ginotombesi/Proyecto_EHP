@@ -1,3 +1,5 @@
+![Eco Harmony Park Logo](EHP_RecursosGraficos/Logo_EHP.png)
+
 # Proyecto Eco Harmony Park (EHP)
 
 ## Información General
@@ -22,7 +24,7 @@
 | Juan Ignacio Rottino      | 94543  |
 | Valentino Gabriel Rocca   | 94774  |
 | Gino Paolo Tombesi        | 95345  |
-| Lucca Medina              | 95644  |
+| Lucca Medina              |        |
 
 ## Repositorio del Proyecto
 [Repositorio GitHub](https://github.com/ginotombesi/Proyecto_EHP)
