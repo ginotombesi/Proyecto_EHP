@@ -1,5 +1,5 @@
 
-![Eco Harmony Park Logo](EHP_Implementacion/EHP_I_Codf/frontend/public/logo_EHP.png)
+  ![Eco Harmony Park Logo](EHP_Implementacion/EHP_I_Codf/frontend/public/logo_EHP.png)
 
 # Proyecto Eco Harmony Park (EHP)
 ## Información General
