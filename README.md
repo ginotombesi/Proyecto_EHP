@@ -1,4 +1,3 @@
-
 # Proyecto Eco Harmony Park (EHP)
 
 ## Información General
@@ -10,7 +9,7 @@
 - María Mickaela Crespo
 - Constanza Garnero
 
-**Grupo 9 - Integrantes:**
+**Grupo 9 Integrantes:**
 
 | Nombre                    | Legajo |
 |---------------------------|--------|
@@ -33,24 +32,40 @@
 ## Estructura del Proyecto
 
 - **EHP_Implementacion:** Código fuente, base de datos, manuales y librerías.
-- **EHP_Linea_Base:** Documentación de líneas base definidas en el proyecto.
+  - **EHP_I_Codf:** Código fuente del sistema.
+  - **EHP_I_BD:** Base de datos.
+  - **EHP_I_GuiaEst:** Guía de estilos y convenciones de codificación.
 - **EHP_Pruebas:** Casos de prueba.
-- **TPs_Documentacion:** Trabajos prácticos y documentación general del proyecto (no código).
+- **EHP_TpDocumentacion:** Trabajos prácticos y documentación general del proyecto.
+  - **EHP_TP_<NroTP>:** Carpeta correspondiente a cada trabajo práctico (ej.: EHP_TP_7, EHP_TP_10).
 
 ---
 
 ## Ítems de Configuración
 
-| Ítem de Configuración               | Regla de Nombrado                                | Ubicación Física                                                                                           | Tipo de Ítem   |
-|-------------------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------|----------------|
-| Base de datos                       | `EHP_I_BD.db`                                     | [Base de datos](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_BD)        | Implementación |
-| Código fuente                       | `EHP_I_CodF_<NombreComponente>.<extensión>`       | [Código Fuente](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_Codf)      | Implementación |
-| Casos de prueba                     | `EHP_CP<NroCP>_<descripcionCP>.<extension>`       | [Casos de prueba](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Pruebas)                      | Implementación |
-| Líneas base                         | `EHP_LINEA_BASE_<ITERxx>_<NOMBRE_LB>_<NN>`   |               | Etiqueta      |
+| Ítem de Configuración                   | Regla de Nombrado                                    | Ubicación Física                                                                                     | Tipo de Ítem   |
+|-----------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------------------------------------|----------------|
+| Base de datos                           | `EHP_I_BD.db`                                         | [Base de datos](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_BD)    | Implementación |
+| Código fuente                           | `EHP_I_CodF_<NombreComponente>.<extensión>`           | [Código Fuente](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_Codf)  | Implementación |
+| Casos de prueba                         | `EHP_CP<NroCP>_<descripcionCP>.<extension>`           | [Casos de prueba](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Pruebas)                  | Implementación |
+| Guía de estilos                         | `Documento Estilo de Código.pdf` (o nombre descriptivo) | [Guía de estilos](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_GuiaEst) | Documentación  |
+| Trabajos Prácticos (TPs)                | `EHP_TP_<NroTP>_<descripcion>.<extensión>`            | [TPs](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_TpDocumentacion/EHP_TP_<NroTP>)       | Documentación  |
+| Líneas base                             | `EHP_LINEA_BASE_<ITERxx>_<NOMBRE_LB>_<NN>`            | [Historial de líneas base](https://github.com/ginotombesi/Proyecto_EHP/tags)                          | Etiqueta      |
+
+---
+
+## Convenciones y Reglas de Nombrado
+
+- Todas las carpetas y archivos siguen el prefijo `EHP_` para identificar que pertenecen al proyecto.
+- Los TPs se guardan en carpetas con el formato `EHP_TP_<NroTP>` dentro de `EHP_TpDocumentacion`. Ejemplo: `EHP_TP_7`, `EHP_TP_10`.
+- Los documentos dentro de cada carpeta de TP deben usar la convención `EHP_TP_<NroTP>_<descripcion>.<extensión>`.
+- La guía de estilos se encuentra en `EHP_Implementacion/EHP_I_GuiaEst` y contiene las pautas para la codificación y formato de archivos.
+- Las líneas base del proyecto se gestionan mediante etiquetas (tags) en el repositorio, y están disponibles en el [Historial de líneas base](https://github.com/ginotombesi/Proyecto_EHP/tags).
 
 ---
 
 ## Línea Base del Proyecto
+
 La línea base se establecerá tras la revisión y aprobación por parte de las profesoras. Las modificaciones posteriores deberán ser debidamente justificadas y documentadas.
 
 ---
