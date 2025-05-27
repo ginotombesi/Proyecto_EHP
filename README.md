@@ -5,13 +5,14 @@
 ## Tabla de Contenidos
 
 - [Información General](#información-general)
+- [Integrantes del Grupo](#integrantes-del-grupo)
 - [Repositorio del Proyecto](#repositorio-del-proyecto)
 - [Estructura del Proyecto](#estructura-del-proyecto)
 - [Ítems de Configuración](#ítems-de-configuración)
 - [Convenciones y Reglas de Nombrado](#convenciones-y-reglas-de-nombrado)
 - [Línea Base del Proyecto](#línea-base-del-proyecto)
 - [Historial de Actualizaciones](#historial-de-actualizaciones)
-- [Integrantes del Grupo](#integrantes-del-grupo)
+
 
 ---
 
