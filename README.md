@@ -2,6 +2,19 @@
 
 # Proyecto Eco Harmony Park (EHP)
 
+## Tabla de Contenidos
+
+- [Información General](#información-general)
+- [Repositorio del Proyecto](#repositorio-del-proyecto)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Ítems de Configuración](#ítems-de-configuración)
+- [Convenciones y Reglas de Nombrado](#convenciones-y-reglas-de-nombrado)
+- [Línea Base del Proyecto](#línea-base-del-proyecto)
+- [Historial de Actualizaciones](#historial-de-actualizaciones)
+- [Integrantes del Grupo](#integrantes-del-grupo)
+
+---
+
 ## Información General
 
 **Cátedra:** Ingeniería y Calidad de Software  
@@ -11,7 +24,8 @@
 - María Mickaela Crespo
 - Constanza Garnero
 
-**Grupo 9 Integrantes:**
+---
+## Integrantes del Grupo
 
 | Nombre                    | Legajo |
 |---------------------------|--------|
@@ -25,14 +39,13 @@
 | Valentino Gabriel Rocca   | 94774  |
 | Gino Paolo Tombesi        | 95345  |
 | Lucca Medina              | 95644  |
-
+---
 ## Repositorio del Proyecto
+
 [Repositorio GitHub](https://github.com/ginotombesi/Proyecto_EHP)
 
 ---
-
 ## Estructura del Proyecto
-
 - **EHP_Implementacion:** Código fuente, base de datos, manuales y librerías.
   - **EHP_I_Codf:** Código fuente del sistema.
   - **EHP_I_BD:** Base de datos.
@@ -54,7 +67,7 @@
 | Casos de prueba                         | `EHP_CP<NroCP>_<descripcionCP>.<extension>`           | [Casos de prueba](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Pruebas)                  | Implementación |
 | Guía de estilos                         | `Documento Estilo de Código.pdf` (o nombre descriptivo) | [Guía de estilos](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_GuiaEst) | Documentación  |
 | Trabajos Prácticos (TPs)                | `EHP_TP_<NroTP>_<descripcion>.<extensión>`            | [TPs](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_TpDocumentacion/EHP_TP_<NroTP>)       | Documentación  |
-| Trabajo de Investigación Grupal (TIG)   | `EHP_TIG_<NroTIG>_<descripcion>.<extensión>`          | [TIG](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_TIG)       | Documentación  |
+| Trabajo de Investigación Grupal (TIG)   | `EHP_TIG_<NroTIG>_<descripcion>.<extensión>`          | [TIG](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_TIG/EHP_TIG_1_PosterCientifico)       | Documentación  |
 | Líneas base                             | `EHP_LINEA_BASE_<ITERxx>_<NOMBRE_LB>_<NN>`            | [Historial de líneas base](https://github.com/ginotombesi/Proyecto_EHP/tags)                          | Etiqueta      |
 
 ---
@@ -82,6 +95,7 @@ La línea base se establecerá tras la revisión y aprobación por parte de las 
 |-------------|----------------------------|-----------------------------------------|
 | 14-05-2025  | Lucas Martín Chas Díaz     | Actualización inicial                   |
 | 24-05-2025  | Lucas Martín Chas Díaz     | Revisión y mejoras de estructura README |
-| 27-05-2025  | Lucas Martín Chas Díaz     | Inclusión de carpeta EHP_TIG y ajuste de estructura |
+| 27-05-2025  | Lucas Martín Chas Díaz     | Inclusión de carpeta EHP_TIG., ajuste de estructura y etiqueta de 3er linea base |
+---
 
 
