@@ -47,7 +47,8 @@
 
 ---
 ## Estructura del Proyecto
-- **EHP_Implementacion:** Código fuente, base de datos, manuales y librerías.
+- **EHP-Anexo:** consideraciones para crear linea base.
+ - **EHP_Implementacion:** Código fuente, base de datos, manuales y librerías.
   - **EHP_I_Codf:** Código fuente del sistema.
   - **EHP_I_BD:** Base de datos.
   - **EHP_I_GuiaEst:** Guía de estilos y convenciones de codificación.
@@ -81,6 +82,7 @@
 - Los documentos dentro de cada carpeta de TP o TIG deben usar la convención `EHP_TP_<NroTP>_<descripcion>.<extensión>` o `EHP_TIG_<NroTIG>_<descripcion>.<extensión>`.
 - La guía de estilos se encuentra en `EHP_Implementacion/EHP_I_GuiaEst` y contiene las pautas para la codificación y formato de archivos.
 - Las líneas base del proyecto se gestionan mediante etiquetas (tags) en el repositorio, y están disponibles en el [Historial de líneas base](https://github.com/ginotombesi/Proyecto_EHP/tags).
+- La forma de etiquetar un linea base se encuentrada detallado en: [Anexo](https://github.com/ginotombesi/Proyecto_EHP/blob/main/EHP_Anexo/Anexo_Creacion_Linea_Base.md)
 
 ---
 
