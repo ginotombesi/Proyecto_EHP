@@ -57,7 +57,7 @@
   - **EHP_TP_<NroTP>:** Carpeta correspondiente a cada trabajo práctico (ej.: EHP_TP_7, EHP_TP_10).
 - **EHP_TIG:** Trabajo de Investigación Grupal (TIG).
   - **EHP_TIG_1_PosterCientifico:** Póster científico del grupo sobre Integración Continua.
-  - **EHP_TIG_1_CharlaTED:** Charla TED sobre el framework Cynefin.
+  - **EHP_TIG_2_CharlaTED:** Charla TED sobre el framework Cynefin.
 
 ---
 
