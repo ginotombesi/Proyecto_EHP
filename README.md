@@ -68,7 +68,7 @@
 | Base de datos                           | `EHP_I_BD.db`                                         | [Base de datos](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_BD)    | Implementación |
 | Casos de prueba                         | `EHP_CP_<NroCP>_<descripcionCP>.<extension>`           | [Casos de prueba](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Pruebas)                  | Implementación |
 | Guía de estilos                         | `Documento Estilo de Código.pdf` (o nombre descriptivo) | [Guía de estilos](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_GuiaEst) | Documentación  |
-| Trabajos Prácticos (TPs)                | `EHP_TP_<NroTP>_<descripcion>.<extensión>`            | [TPs](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_TpDocumentacion/EHP_TP_<NroTP>)       | Documentación  |
+| Trabajos Prácticos (TPs)                | `EHP_TP_<NroTP>_<descripcion>.<extensión>`            | [TPs](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_TpDocumentacion)       | Documentación  |
 | Trabajo de Investigación Grupal (TIG)   | `EHP_TIG_<NroTIG>_<descripcion>.<extensión>`          | [TIG](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_TIG/EHP_TIG_1_PosterCientifico)       | Documentación  |
 | Líneas base                             | `EHP_LINEA_BASE_<ITERxx>_<NOMBRE_LB>_<NN>`            | [Historial de líneas base](https://github.com/ginotombesi/Proyecto_EHP/tags)                          | Etiqueta      |
 
