@@ -57,6 +57,7 @@
   - **EHP_TP_<NroTP>:** Carpeta correspondiente a cada trabajo práctico (ej.: EHP_TP_7, EHP_TP_10).
 - **EHP_TIG:** Trabajo de Investigación Grupal (TIG).
   - **EHP_TIG_1_PosterCientifico:** Póster científico del grupo sobre Integración Continua.
+  - **EHP_TIG_2_CharlaTED:** Charla TED sobre el framework Cynefin.
 
 ---
 
@@ -65,7 +66,6 @@
 | Ítem de Configuración                   | Regla de Nombrado                                    | Ubicación Física                                                                                     | Tipo de Ítem   |
 |-----------------------------------------|-------------------------------------------------------|------------------------------------------------------------------------------------------------------|----------------|
 | Base de datos                           | `EHP_I_BD.db`                                         | [Base de datos](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_BD)    | Implementación |
-| Código fuente                           | `EHP_I_CodF_<NombreComponente>.<extensión>`           | [Código Fuente](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_Codf)  | Implementación |
 | Casos de prueba                         | `EHP_CP<NroCP>_<descripcionCP>.<extension>`           | [Casos de prueba](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Pruebas)                  | Implementación |
 | Guía de estilos                         | `Documento Estilo de Código.pdf` (o nombre descriptivo) | [Guía de estilos](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_Implementacion/EHP_I_GuiaEst) | Documentación  |
 | Trabajos Prácticos (TPs)                | `EHP_TP_<NroTP>_<descripcion>.<extensión>`            | [TPs](https://github.com/ginotombesi/Proyecto_EHP/tree/main/EHP_TpDocumentacion/EHP_TP_<NroTP>)       | Documentación  |
